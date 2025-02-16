@@ -1,8 +1,8 @@
 import { LessonContext, type TaskProcedure } from "~/contexts";
 import NestedGridLayout from "./NestedGridLayout";
 import ProcedureInput from "./ProcedureInput";
-import { use } from "react";
 import { getEditors } from "~/features/rich-text";
+import { use } from "react";
 
 interface Props {
   taskId: number;
@@ -17,47 +17,7 @@ const EditingProcedureInputGrid = ({
   procedure,
   setEditing,
 }: Props) => {
-  const { tasks, setTasks } = use(LessonContext);
-
-  const editProcedure = (
-    id: number,
-    taskId: number,
-    stageId: string,
-    activities: string,
-    content: string
-  ) => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === taskId) {
-          return {
-            ...task,
-            stages: task.stages.map((stage) => {
-              if (stage.id === stageId) {
-                return {
-                  ...stage,
-                  procedures: stage.procedures.map((p) => {
-                    if (p.id === id) {
-                      return {
-                        ...p,
-                        ...(activities.length > 0 ? { activities } : {}),
-                        ...(content.length > 0 ? { content } : {}),
-                      };
-                    }
-
-                    return p;
-                  }),
-                };
-              }
-
-              return stage;
-            }),
-          };
-        }
-
-        return task;
-      })
-    );
-  };
+  const { editProcedure } = use(LessonContext);
 
   const { activitiesEditor, contentEditor } = getEditors(
     (activities) =>

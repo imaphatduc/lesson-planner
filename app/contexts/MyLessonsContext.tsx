@@ -1,4 +1,9 @@
-import { createContext, type PropsWithChildren } from "react";
+import {
+  createContext,
+  type Dispatch,
+  type PropsWithChildren,
+  type SetStateAction,
+} from "react";
 import {
   lessonReference,
   type Lesson,
@@ -9,7 +14,7 @@ import { useLocalStorage } from "usehooks-ts";
 
 interface MyLessons {
   myLessons: Lesson[];
-  setMyLessons: (d: Lesson[]) => void;
+  setMyLessons: Dispatch<SetStateAction<Lesson[]>>;
   getId: (metadata: LessonMetadata) => string;
   getLessonById: (id: string) => Lesson | undefined;
   addLesson: (d: Lesson) => void;
@@ -37,6 +42,8 @@ export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
 
   const getLessonById = (id: string) => {
     const [grade, book, unit, code] = id.split("-");
+    console.log(grade, book, unit, code);
+    console.log(myLessons);
 
     const lesson = myLessons.find(
       (lesson) =>

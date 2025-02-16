@@ -1,4 +1,4 @@
-import { LessonContext, LessonProvider } from "./LessonContext";
+import { LessonContext, LessonProvider } from "./LessonContext/LessonContext";
 import { useGrammarProcedures } from "./useGrammarProcedures";
 import {
   lessonReference,
