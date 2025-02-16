@@ -8,6 +8,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { MyLessonsProvider } from "./contexts/MyLessonsContext";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -23,6 +24,13 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Lesson Planner" },
+    { name: "description", content: "Plan your lessons!" },
+  ];
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -33,7 +41,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <MyLessonsProvider>{children}</MyLessonsProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

@@ -3,11 +3,59 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --animate-dash-blink: dash-blink 1.5s linear infinite;
+
+  @keyframes dash-blink {
+    0% {
+      border-color: white;
+    }
+    50% {
+      border-color: rgb(100, 100, 100);
+    }
+    100% {
+      border-color: white;
+    }
+  }
+}
+
+@layer utilities {
+  .no-spinner::-webkit-inner-spin-button,
+  .no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .no-spinner {
+    -moz-appearance: textfield; /* Firefox */
+  }
+
+  .prose ul {
+    list-style-type: disc; /* Bullet points */
+    margin-left: 1.5rem;
+  }
+
+  .prose ol {
+    list-style-type: decimal; /* Numbered list */
+    margin-left: 1.5rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+h2 {
+  @apply text-2xl font-bold;
+}
+
+h3 {
+  @apply text-lg font-bold;
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-black;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
