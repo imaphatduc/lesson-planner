@@ -1,3 +1,4 @@
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 import { setStage } from "../setStage";
 import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
@@ -5,12 +6,12 @@ export const addProcedure =
   (props: ActionProps) =>
   (
     taskId: number,
-    stageId: string,
+    stageName: PPPStage["name"],
     activities: string,
     content: string,
     procedureId?: number
   ) => {
-    setStage(props)(taskId, stageId, (stage) => {
+    setStage(props)(taskId, stageName, (stage) => {
       if (procedureId) {
         let index = stage.procedures.findIndex((p) => p.id === procedureId);
 

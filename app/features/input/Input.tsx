@@ -4,7 +4,7 @@ const Input = (props: InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <input
       {...props}
-      className="w-full p-1 bg-neutral-600 rounded-md no-spinner"
+      className="w-full p-1 bg-neutral-300 dark:bg-neutral-600 rounded-md no-spinner"
     />
   );
 };

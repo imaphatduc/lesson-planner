@@ -1,3 +1,5 @@
+import type { PPPStage, PPPStageGroup } from "./usePPPProcedures";
+
 export interface TaskProcedure {
   id: number;
   activities: string;
@@ -5,12 +7,12 @@ export interface TaskProcedure {
 }
 
 export interface TaskGroupStage {
-  id: string;
+  name: PPPStageGroup["name"];
   targetLanguageItemId: number;
 }
 
 export interface TaskStage {
-  id: string;
+  name: PPPStage["name"];
   targetLanguageItemId: number;
   timing: number;
   procedures: TaskProcedure[];

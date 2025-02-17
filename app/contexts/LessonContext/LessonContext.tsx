@@ -38,6 +38,7 @@ import {
   moveProcedure,
   removeProcedure,
 } from "./actions/task/stage/procedure";
+import type { PPPStage, PPPStageGroup } from "../usePPPProcedures";
 
 interface T {
   preview: boolean;
@@ -60,28 +61,34 @@ interface T {
   editTaskInstructions: (taskId: number, instructions: string) => void;
 
   getTasksByStageGroup: (
-    groupId: string,
+    groupName: PPPStageGroup["name"],
     targetLanguageItemId?: number
   ) => Task[];
-  getGoodTasksForStageGroup: (groupId: string) => Task[];
-  setStageGroupForTask: (groupId: string, taskId: number) => void;
-  removeTaskFromStageGroup: (groupId: string, taskId: number) => void;
+  getGoodTasksForStageGroup: () => Task[];
+  setStageGroupForTask: (
+    groupName: PPPStageGroup["name"],
+    taskId: number
+  ) => void;
+  removeTaskFromStageGroup: (
+    groupName: PPPStageGroup["name"],
+    taskId: number
+  ) => void;
 
   getTasksByStage: (
-    stageId: string,
+    stageName: PPPStage["name"],
     targetLanguageItemId?: number
   ) => TaskInStage[];
-  setStageForTask: (stageId: string, taskId: number) => void;
+  setStageForTask: (stage: PPPStage, taskId: number) => void;
   editTaskStageTiming: (
     taskId: number,
-    stageId: string,
+    stageName: PPPStage["name"],
     timing: number
   ) => void;
-  removeTaskFromStage: (stageId: string, taskId: number) => void;
+  removeTaskFromStage: (stage: PPPStage, taskId: number) => void;
 
   addProcedure: (
     taskId: number,
-    stageId: string,
+    stageName: PPPStage["name"],
     activities: string,
     content: string,
     procedureId?: number
@@ -89,25 +96,25 @@ interface T {
   editProcedure: (
     id: number,
     taskId: number,
-    stageId: string,
+    stageName: PPPStage["name"],
     activities: string,
     content: string
   ) => void;
   moveProcedure: (
     pending: {
-      stageId: string;
+      stageName: PPPStage["name"];
       taskId: number;
       procedure: TaskProcedure;
     },
     target: {
-      stageId: string;
+      stageName: PPPStage["name"];
       taskId: number;
       procedureId: number;
     }
   ) => void;
   removeProcedure: (
     taskId: number,
-    stageId: string,
+    stageName: PPPStage["name"],
     procedureId: number
   ) => void;
 }

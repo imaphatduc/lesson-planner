@@ -8,13 +8,13 @@ const StepIndicator = ({ currentStep }: Props) => {
   const pastCellStyles =
     "w-4 h-4 bg-green-400 rounded-full flex justify-center items-center mx-auto mb-3 text-sm text-black lg:w-8 lg:h-8";
   const currentCellStyles =
-    "w-4 h-4 bg-neutral-800 rounded-full flex justify-center items-center mx-auto mb-3 text-sm text-black lg:w-8 lg:h-8 border-2 border-green-400 text-green-400";
+    "w-4 h-4 text-black bg-neutral-100 dark:text-green-400 dark:bg-neutral-800 rounded-full flex justify-center items-center mx-auto mb-3 text-sm text-black lg:w-8 lg:h-8 border-2 border-green-400";
   const nextCellStyles =
-    "w-4 h-4 bg-neutral-900 rounded-full flex justify-center items-center mx-auto mb-3 text-sm text-white lg:w-8 lg:h-8";
+    "w-4 h-4 text-black bg-neutral-100 dark:text-white dark:bg-neutral-900 rounded-full flex justify-center items-center mx-auto mb-3 text-sm lg:w-8 lg:h-8";
   const pastProgressStyles =
     "flex w-full relative after:content-[''] after:w-full after:h-2 after:bg-green-500 after:inline-block after:absolute lg:after:top-3 after:top-2 after:left-3";
   const nextProgressStyles =
-    "flex w-full relative after:content-[''] after:w-full after:h-2 after:bg-neutral-900 after:inline-block after:absolute lg:after:top-3 after:top-2 after:left-3";
+    "flex w-full relative after:content-[''] after:w-full after:h-2 dark:after:bg-neutral-900 after:inline-block after:absolute lg:after:top-3 after:top-2 after:left-3";
   const maxProgressStyles = "flex w-full relative";
 
   const numSteps = steps.length;

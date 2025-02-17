@@ -1,5 +1,6 @@
 import {
   createContext,
+  useEffect,
   type Dispatch,
   type PropsWithChildren,
   type SetStateAction,
@@ -13,6 +14,8 @@ import {
 import { useLocalStorage } from "usehooks-ts";
 
 interface MyLessons {
+  darkMode: boolean;
+  setDarkMode: (d: boolean) => void;
   myLessons: Lesson[];
   setMyLessons: Dispatch<SetStateAction<Lesson[]>>;
   getId: (metadata: LessonMetadata) => string;
@@ -21,6 +24,8 @@ interface MyLessons {
 }
 
 export const MyLessonsContext = createContext<MyLessons>({
+  darkMode: false,
+  setDarkMode: () => {},
   myLessons: [],
   setMyLessons: () => {},
   getId: () => "",
@@ -30,6 +35,16 @@ export const MyLessonsContext = createContext<MyLessons>({
 
 export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
   const [myLessons, setMyLessons] = useLocalStorage<Lesson[]>("my-lessons", []);
+
+  const [darkMode, setDarkMode] = useLocalStorage("dark-mode", false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   const addLesson = (lesson: Lesson) => {
     setMyLessons([...myLessons, lesson]);
@@ -57,6 +72,8 @@ export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
   return (
     <MyLessonsContext.Provider
       value={{
+        darkMode,
+        setDarkMode,
         myLessons,
         setMyLessons,
         getId,

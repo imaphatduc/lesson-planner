@@ -1,42 +1,45 @@
 import { use } from "react";
 import { DragItem, DropSlot } from "~/features/dnd";
-import { useGrammarProcedures } from "~/contexts/useGrammarProcedures";
+import { usePPPProcedures, type PPPStage } from "~/contexts/usePPPProcedures";
 import { LessonContext } from "~/contexts";
 import { XButton } from "~/features/x-button";
 
 interface Props {
-  stageId: string;
+  stage: PPPStage;
 }
 
-const StageDropSlot = ({ stageId }: Props) => {
+const StageDropSlot = ({ stage }: Props) => {
   const { getTasksByStage, removeTaskFromStage } = use(LessonContext);
 
-  const { getStage } = useGrammarProcedures();
+  const { getStage } = usePPPProcedures();
 
   return (
     <DropSlot
       className="border-2 border-dashed border-neutral-500 rounded-md p-1"
-      id={stageId}
+      id={stage.name}
+      data={stage}
     >
       <div className="flex gap-3">
-        {getTasksByStage(stageId)
+        {getTasksByStage(stage.name)
           .sort((a, b) => a.id - b.id)
           .map((task) => (
             <DragItem
-              key={`${stageId}-${task.id}`}
-              id={`${stageId}-${task.id}`}
+              key={`${stage.name}-${task.id}`}
+              id={`${stage.name}-${task.id}`}
               disabled
-              className="relative w-20 bg-neutral-500 rounded-sm text-center"
+              className="relative w-20 bg-neutral-300 dark:bg-neutral-500 rounded-sm text-center"
               buttonWhenDisabled={
                 <XButton
-                  onClick={() => removeTaskFromStage(stageId, task.id)}
+                  onClick={() =>
+                    removeTaskFromStage(getStage(stage.name), task.id)
+                  }
                 />
               }
             >
               {`${task.id + 1}`}
             </DragItem>
           ))}
-        <p>{getStage(stageId).name}</p>
+        <p>{stage.name}</p>
       </div>
     </DropSlot>
   );

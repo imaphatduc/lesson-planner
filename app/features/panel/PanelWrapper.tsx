@@ -15,7 +15,7 @@ const PanelWrapper = ({ type, children }: PropsWithChildren<Props>) => {
       minSize={30}
       autoFocus
     >
-      <div className="bg-neutral-800 h-full overflow-auto rounded-md p-5">
+      <div className="bg-neutral-50 dark:bg-neutral-800 h-full overflow-auto rounded-md p-5">
         {children}
       </div>
     </Panel>

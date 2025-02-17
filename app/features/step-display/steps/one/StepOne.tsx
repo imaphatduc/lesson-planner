@@ -1,6 +1,5 @@
 import { Fragment, use } from "react";
 import { LessonContext } from "~/contexts";
-import { motion } from "motion/react";
 import TargetLanguageItemSection from "./TargetLanguageItemSection";
 import { Tabs } from "~/features/tabs";
 

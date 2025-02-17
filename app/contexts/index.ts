@@ -1,5 +1,5 @@
 import { LessonContext, LessonProvider } from "./LessonContext/LessonContext";
-import { useGrammarProcedures } from "./useGrammarProcedures";
+import { usePPPProcedures } from "./usePPPProcedures";
 import {
   lessonReference,
   type Lesson,
@@ -11,7 +11,7 @@ import type { Task, TaskProcedure } from "./Task.type";
 export {
   LessonContext,
   LessonProvider,
-  useGrammarProcedures,
+  usePPPProcedures,
   lessonReference,
   type Lesson,
   type LessonField,

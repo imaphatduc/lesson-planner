@@ -18,7 +18,7 @@ const SelectBox = ({
   required = false,
 }: Props) => {
   return (
-    <div className="form-control w-full bg-neutral-600 rounded-t-md">
+    <div className="form-control w-full bg-neutral-300 dark:bg-neutral-600 rounded-t-md">
       <select
         name={name}
         className="select select-bordered w-full py-1"
@@ -26,13 +26,17 @@ const SelectBox = ({
         onChange={handleChange}
         required={required}
       >
-        <option className="bg-neutral-600" disabled>
+        <option className="bg-neutral-400 dark:bg-neutral-600" disabled>
           {typeof defaultValue === "number"
             ? display(defaultValue)
             : defaultValue}
         </option>
         {options.map((option, i) => (
-          <option key={i} className="bg-neutral-600" value={option}>
+          <option
+            key={i}
+            className="bg-neutral-300 dark:bg-neutral-600"
+            value={option}
+          >
             {display(option)}
           </option>
         ))}

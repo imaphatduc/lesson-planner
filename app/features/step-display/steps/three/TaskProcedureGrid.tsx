@@ -5,14 +5,15 @@ import { LessonContext, type TaskProcedure } from "~/contexts";
 import { XButton } from "~/features/x-button";
 import TaskProcedureDropSlot from "./TaskProcedureDropSlot";
 import { DragItem } from "~/features/dnd";
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 
 interface Props {
   taskId: number;
-  stageId: string;
+  stageName: PPPStage["name"];
   procedure: TaskProcedure;
 }
 
-const TaskProcedureGrid = ({ taskId, stageId, procedure }: Props) => {
+const TaskProcedureGrid = ({ taskId, stageName, procedure }: Props) => {
   const { preview, removeProcedure } = use(LessonContext);
 
   const [editing, setEditing] = useState(false);
@@ -35,7 +36,7 @@ const TaskProcedureGrid = ({ taskId, stageId, procedure }: Props) => {
       {!preview ? (
         <TaskProcedureDropSlot
           taskId={taskId}
-          stageId={stageId}
+          stageName={stageName}
           procedureId={procedure.id}
         />
       ) : (
@@ -43,11 +44,11 @@ const TaskProcedureGrid = ({ taskId, stageId, procedure }: Props) => {
       )}
       <DragItem
         disabled={preview}
-        id={`${stageId}-${taskId}-${procedure.id}`}
-        data={{ stageId, taskId, procedure }}
+        id={`${stageName}-${taskId}-${procedure.id}`}
+        data={{ stageName, taskId, procedure }}
         className={
           hovering && !preview
-            ? " col-span-2 relative cursor-pointer hover:bg-gray-700"
+            ? " col-span-2 relative cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700"
             : " col-span-2 relative"
         }
         onClickCapture={() => setEditing(true)}
@@ -61,7 +62,7 @@ const TaskProcedureGrid = ({ taskId, stageId, procedure }: Props) => {
         {hovering && !preview && (
           <XButton
             onClickCapture={() =>
-              removeProcedure(taskId, stageId, procedure.id)
+              removeProcedure(taskId, stageName, procedure.id)
             }
           />
         )}
@@ -72,7 +73,7 @@ const TaskProcedureGrid = ({ taskId, stageId, procedure }: Props) => {
       <div></div>
       <EditingProcedureInputGrid
         taskId={taskId}
-        stageId={stageId}
+        stageName={stageName}
         procedure={procedure}
         setEditing={setEditing}
       />

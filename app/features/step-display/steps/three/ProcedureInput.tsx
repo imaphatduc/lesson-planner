@@ -11,7 +11,7 @@ const ProcedureInput = ({ editor, children }: PropsWithChildren<Props>) => {
     <div>
       <RichTextEditor
         editor={editor}
-        className="break-words p-2 field-sizing-content w-full h-full bg-neutral-700 rounded-t-sm"
+        className="break-words p-2 field-sizing-content w-full h-full bg-neutral-200 dark:bg-neutral-700 rounded-t-sm"
       />
       {children}
     </div>

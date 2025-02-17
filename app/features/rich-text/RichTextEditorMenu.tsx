@@ -8,8 +8,8 @@ interface Props {
 const RichTextEditorMenu = ({ editor }: Props) => {
   const buttonClassName = (b: boolean) =>
     b
-      ? "text-sm p-2 w-8 h-8 rounded transition cursor-pointer hover:bg-neutral-600 bg-teal-800 text-white"
-      : "text-sm p-2 w-8 h-8 rounded transition cursor-pointer hover:bg-neutral-600 bg-neutral-500";
+      ? "text-sm p-2 w-8 h-8 rounded transition cursor-pointer hover:bg-neutral-400 dark:hover:bg-neutral-600 bg-neutral-300 dark:bg-teal-800 text-white"
+      : "text-sm p-2 w-8 h-8 rounded transition cursor-pointer hover:bg-neutral-400 dark:hover:bg-neutral-600 bg-neutral-300 dark:bg-neutral-500";
 
   return (
     <div className="toolbar mb-4 flex gap-2">

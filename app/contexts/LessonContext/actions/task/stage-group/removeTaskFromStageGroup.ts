@@ -1,8 +1,10 @@
 import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 import { setTasks } from "../setTasks";
+import type { PPPStageGroup } from "~/contexts/usePPPProcedures";
 
 export const removeTaskFromStageGroup =
-  (props: ActionProps) => (groupId: string, taskId: number) => {
+  (props: ActionProps) =>
+  (groupName: PPPStageGroup["name"], taskId: number) => {
     setTasks(props)((task) => {
       const { currentTargetLanguageItemId } = props;
 
@@ -13,7 +15,7 @@ export const removeTaskFromStageGroup =
             (group) =>
               !(
                 group.targetLanguageItemId === currentTargetLanguageItemId &&
-                group.id === groupId
+                group.name === groupName
               )
           ),
         };

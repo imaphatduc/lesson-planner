@@ -12,8 +12,8 @@ const SetCurrentStepButton = ({ axis }: Props) => {
     <button
       className={
         axis > 0
-          ? "p-2 bg-teal-700 rounded-sm hover:bg-teal-800 cursor-pointer transition"
-          : "p-2 bg-red-700 rounded-sm hover:bg-red-800 cursor-pointer transition"
+          ? "p-2 text-white bg-teal-700 rounded-sm hover:bg-teal-800 cursor-pointer transition"
+          : "p-2 text-white bg-red-700 rounded-sm hover:bg-red-800 cursor-pointer transition"
       }
       onClick={() => setCurrentStep(axis)}
     >

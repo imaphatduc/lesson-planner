@@ -7,7 +7,7 @@ const AddProcedureButtonGrid = ({ ...props }: Props) => {
     <>
       <div className=""></div>
       <button
-        className="bg-teal-700 hover:bg-teal-800 transition w-full rounded-b-sm cursor-pointer"
+        className="text-white bg-teal-700 hover:bg-teal-800 transition w-full rounded-b-sm cursor-pointer"
         {...props}
       >
         +

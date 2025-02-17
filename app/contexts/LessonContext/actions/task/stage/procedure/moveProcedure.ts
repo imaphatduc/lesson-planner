@@ -1,18 +1,18 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
-import type { Task, TaskProcedure } from "~/contexts/Task.type";
+import type { TaskProcedure } from "~/contexts/Task.type";
 import { setCurrentLesson } from "../../../lesson/setCurrentLesson";
 import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 
 export const moveProcedure =
   (props: ActionProps) =>
   (
     pending: {
-      stageId: string;
+      stageName: PPPStage["name"];
       taskId: number;
       procedure: TaskProcedure;
     },
     target: {
-      stageId: string;
+      stageName: string;
       taskId: number;
       procedureId: number;
     }
@@ -20,7 +20,7 @@ export const moveProcedure =
     const { tasks } = props;
 
     if (
-      pending.stageId === target.stageId &&
+      pending.stageName === target.stageName &&
       pending.taskId === target.taskId &&
       pending.procedure.id === target.procedureId
     ) {
@@ -32,7 +32,7 @@ export const moveProcedure =
         return {
           ...task,
           stages: task.stages.map((stage) => {
-            if (stage.id === pending.stageId) {
+            if (stage.name === pending.stageName) {
               return {
                 ...stage,
                 procedures: stage.procedures.filter(
@@ -49,7 +49,7 @@ export const moveProcedure =
       return task;
     });
 
-    const { stageId, taskId, procedureId } = target;
+    const { stageName, taskId, procedureId } = target;
 
     setCurrentLesson(props)((lesson) => ({
       ...lesson,
@@ -58,7 +58,7 @@ export const moveProcedure =
           return {
             ...task,
             stages: task.stages.map((stage) => {
-              if (stage.id === stageId) {
+              if (stage.name === stageName) {
                 let index = stage.procedures.findIndex(
                   (p) => p.id === procedureId
                 );

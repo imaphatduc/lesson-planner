@@ -1,19 +1,20 @@
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 import { setTask } from "../setTask";
 import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const setStageForTask =
-  (props: ActionProps) => (stageId: string, taskId: number) => {
+  (props: ActionProps) => (stage: PPPStage, taskId: number) => {
     setTask(props)(taskId, (task) => {
       const { targetLanguageItems, currentTargetLanguageItemId } = props;
 
-      if (stageId.startsWith("0.") || stageId.startsWith("4.")) {
+      if (stage.group === "Lead-in" || stage.group === "Production") {
         return {
           ...task,
-          stages: !task.stages.some((stage) => stage.id === stageId)
+          stages: !task.stages.some((d) => d.name === stage.name)
             ? [
                 ...task.stages,
                 ...targetLanguageItems.map((targetLanguageItem) => ({
-                  id: stageId,
+                  name: stage.name,
                   targetLanguageItemId: targetLanguageItem.id,
                   timing: 0,
                   procedures: [],
@@ -26,14 +27,14 @@ export const setStageForTask =
       return {
         ...task,
         stages: !task.stages.some(
-          (stage) =>
-            stage.id === stageId &&
-            stage.targetLanguageItemId === currentTargetLanguageItemId
+          (d) =>
+            d.name === stage.name &&
+            d.targetLanguageItemId === currentTargetLanguageItemId
         )
           ? [
               ...task.stages,
               {
-                id: stageId,
+                name: stage.name,
                 targetLanguageItemId: currentTargetLanguageItemId,
                 timing: 0,
                 procedures: [],

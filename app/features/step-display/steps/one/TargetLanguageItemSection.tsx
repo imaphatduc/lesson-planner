@@ -1,6 +1,7 @@
 import { use } from "react";
 import { LessonContext } from "~/contexts";
 import type { TargetLanguageItem } from "~/contexts/Lesson.type";
+import type { PPPStageGroup } from "~/contexts/usePPPProcedures";
 import { MultipleSelection, QuestionLayout, Selection } from "~/features/input";
 import { Input } from "~/features/input";
 
@@ -46,16 +47,18 @@ const TargetLanguageItemSection = ({ targetLanguageItem }: Props) => {
         }
       >
         <MultipleSelection
-          sectionId="1"
-          options={getGoodTasksForStageGroup("1").map((d) => d.id)}
-          selectedOptions={getTasksByStageGroup("1", metadata.currentStep).map(
-            (task) => task.id
-          )}
-          setSelectedOption={(groupId, taskId: number) =>
-            setStageGroupForTask(groupId, taskId)
-          }
+          sectionId="Setting context"
+          options={getGoodTasksForStageGroup().map((d) => d.id)}
+          selectedOptions={getTasksByStageGroup(
+            "Setting context",
+            targetLanguageItem.id
+          ).map((task) => task.id)}
+          setSelectedOption={(
+            groupName: PPPStageGroup["name"],
+            taskId: number
+          ) => setStageGroupForTask(groupName, taskId)}
           removeSelectedOption={(taskId: number) =>
-            removeTaskFromStageGroup("1", taskId)
+            removeTaskFromStageGroup("Setting context", taskId)
           }
           display={display}
         />
@@ -67,14 +70,15 @@ const TargetLanguageItemSection = ({ targetLanguageItem }: Props) => {
         }
       >
         <Selection
-          sectionId="2"
-          options={getGoodTasksForStageGroup("2").map((d) => d.id)}
+          sectionId="Presentation"
+          options={getGoodTasksForStageGroup().map((d) => d.id)}
           selectedOption={
-            getTasksByStageGroup("2", metadata.currentStep)[0]?.id
+            getTasksByStageGroup("Presentation", targetLanguageItem.id)[0]?.id
           }
-          setSelectedOption={(groupId, taskId: number) =>
-            setStageGroupForTask(groupId, taskId)
-          }
+          setSelectedOption={(
+            groupName: PPPStageGroup["name"],
+            taskId: number
+          ) => setStageGroupForTask(groupName, taskId)}
           display={display}
         />
       </QuestionLayout>
@@ -87,16 +91,18 @@ const TargetLanguageItemSection = ({ targetLanguageItem }: Props) => {
         }
       >
         <MultipleSelection
-          sectionId="3"
-          options={getGoodTasksForStageGroup("3").map((d) => d.id)}
-          selectedOptions={getTasksByStageGroup("3", metadata.currentStep).map(
-            (task) => task.id
-          )}
-          setSelectedOption={(groupId, taskId: number) =>
-            setStageGroupForTask(groupId, taskId)
-          }
+          sectionId="Practice"
+          options={getGoodTasksForStageGroup().map((d) => d.id)}
+          selectedOptions={getTasksByStageGroup(
+            "Practice",
+            targetLanguageItem.id
+          ).map((task) => task.id)}
+          setSelectedOption={(
+            groupName: PPPStageGroup["name"],
+            taskId: number
+          ) => setStageGroupForTask(groupName, taskId)}
           removeSelectedOption={(taskId: number) =>
-            removeTaskFromStageGroup("3", taskId)
+            removeTaskFromStageGroup("Practice", taskId)
           }
           display={display}
         />

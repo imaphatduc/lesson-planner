@@ -14,7 +14,7 @@ const StepLayout = ({ name, children }: PropsWithChildren<Props>) => {
 
   return (
     <>
-      <div className="shadow-xl pb-4">
+      <div>
         <StepIndicator currentStep={metadata.currentStep} />
 
         <h2>{name}</h2>

@@ -1,15 +1,20 @@
 import type { TaskStage } from "~/contexts/Task.type";
 import { setTask } from "../setTask";
 import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 
 export const setStage =
   (props: ActionProps) =>
-  (taskId: number, stageId: string, set: (stage: TaskStage) => TaskStage) => {
+  (
+    taskId: number,
+    stageName: PPPStage["name"],
+    set: (stage: TaskStage) => TaskStage
+  ) => {
     setTask(props)(taskId, (task) => {
       return {
         ...task,
         stages: task.stages.map((stage) => {
-          if (stage.id === stageId) {
+          if (stage.name === stageName) {
             return set(stage);
           }
 

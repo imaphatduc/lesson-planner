@@ -1,11 +1,11 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 import { setStage } from "../setStage";
 import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const removeProcedure =
   (props: ActionProps) =>
-  (taskId: number, stageId: string, procedureId: number) => {
-    setStage(props)(taskId, stageId, (stage) => {
+  (taskId: number, stageName: PPPStage["name"], procedureId: number) => {
+    setStage(props)(taskId, stageName, (stage) => {
       return {
         ...stage,
         procedures: stage.procedures.filter((p) => p.id !== procedureId),

@@ -1,29 +1,29 @@
 import { Fragment, use } from "react";
-import { LessonContext, useGrammarProcedures, type Task } from "~/contexts";
-import type { GrammarStageGroup } from "~/contexts/useGrammarProcedures";
+import { LessonContext, usePPPProcedures } from "~/contexts";
+import type { PPPStage, PPPStageGroup } from "~/contexts/usePPPProcedures";
 import StageSection from "./StageSection";
 import type { TargetLanguageItem } from "~/contexts/Lesson.type";
 
 interface Props {
-  group: GrammarStageGroup;
+  group: PPPStageGroup;
   targetLanguageItem?: TargetLanguageItem;
 }
 
 const StageGroupSection = ({ group, targetLanguageItem }: Props) => {
   const { tasks, getTasksByStage } = use(LessonContext);
 
-  const { getStage } = useGrammarProcedures();
+  const { getStage, getStagesInGroup } = usePPPProcedures();
 
-  const firstTaskInDuplicateSequence = group.stages
-    .map((stageId) => getTasksByStage(stageId, targetLanguageItem?.id))
+  const firstTaskInDuplicateSequence = getStagesInGroup(group.name)
+    .map((stage) => getTasksByStage(stage.name, targetLanguageItem?.id))
     .flat()
-    .reduce<{ id: number; stageId: string }[]>((acc, curr) => {
+    .reduce<{ id: number; stageName: PPPStage["name"] }[]>((acc, curr) => {
       if (curr.stage && !acc.find((d) => d.id === curr.id)) {
         return [
           ...acc,
           {
             id: curr.id,
-            stageId: curr.stage.id,
+            stageName: curr.stage.name,
           },
         ];
       }
@@ -34,7 +34,7 @@ const StageGroupSection = ({ group, targetLanguageItem }: Props) => {
   const timing = tasks
     .map((task) =>
       task.stages
-        .filter((stage) => stage.id.startsWith(group.id))
+        .filter((stage) => getStage(stage.name).group === group.name)
         .map((stage) => stage.timing ?? 0)
     )
     .flat()
@@ -48,16 +48,14 @@ const StageGroupSection = ({ group, targetLanguageItem }: Props) => {
       </div>
       <div className=""></div>
       <div className=""></div>
-      {group.stages.map((stageId) => (
-        <Fragment key={stageId}>
-          <StageSection
-            key={stageId}
-            stage={getStage(stageId)}
-            color={group.color}
-            tasks={getTasksByStage(stageId, targetLanguageItem?.id)}
-            firstTaskInDuplicateSequence={firstTaskInDuplicateSequence}
-          />
-        </Fragment>
+      {getStagesInGroup(group.name).map((stage) => (
+        <StageSection
+          key={stage.name}
+          stage={getStage(stage.name)}
+          color={group.color}
+          tasks={getTasksByStage(stage.name, targetLanguageItem?.id)}
+          firstTaskInDuplicateSequence={firstTaskInDuplicateSequence}
+        />
       ))}
       <>
         <div className="border-b"></div>

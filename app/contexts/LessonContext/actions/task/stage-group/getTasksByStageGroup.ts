@@ -1,37 +1,45 @@
 import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
+import {
+  usePPPProcedures,
+  type PPPStageGroup,
+} from "~/contexts/usePPPProcedures";
 
 export const getTasksByStageGroup =
   ({ metadata, tasks, currentTargetLanguageItemId }: ActionProps) =>
-  (groupId: string, targetLanguageItemId?: number) => {
+  (groupName: PPPStageGroup["name"], targetLanguageItemId?: number) => {
     const _ = (d: number) =>
       targetLanguageItemId !== undefined
         ? d === targetLanguageItemId
         : d === currentTargetLanguageItemId;
 
+    const { getStage } = usePPPProcedures();
+
     if (metadata.currentStep >= 2) {
       return tasks.filter((task) =>
         task.stages.some(
           (stage) =>
-            _(stage.targetLanguageItemId) && stage.id.startsWith(`${groupId}.`)
+            _(stage.targetLanguageItemId) &&
+            getStage(stage.name).group === groupName
         )
       );
     }
 
-    const getTasks = (groupId: string, only = false) =>
-      tasks.filter((task) =>
+    const getTasks = (groupName: PPPStageGroup["name"], only = false) => {
+      return tasks.filter((task) =>
         task.stageGroups.some(
           (group) =>
             (only ? _(group.targetLanguageItemId) : true) &&
-            group.id === groupId
+            group.name === groupName
         )
       );
+    };
 
     const getLeadinAndProductionTasks = () => {
       const allTasks = tasks.filter(
         (task) =>
-          !getTasks("1").some((d) => d.id === task.id) &&
-          !getTasks("2").some((d) => d.id === task.id) &&
-          !getTasks("3").some((d) => d.id === task.id)
+          !getTasks("Setting context").some((d) => d.id === task.id) &&
+          !getTasks("Presentation").some((d) => d.id === task.id) &&
+          !getTasks("Practice").some((d) => d.id === task.id)
       );
 
       if (allTasks.length === 1) {
@@ -43,12 +51,12 @@ export const getTasksByStageGroup =
       return { leadinTasks: [leadinTask], productionTasks };
     };
 
-    switch (groupId) {
-      case "0":
+    switch (groupName) {
+      case "Lead-in":
         return getLeadinAndProductionTasks().leadinTasks;
-      case "4":
+      case "Production":
         return getLeadinAndProductionTasks().productionTasks;
       default:
-        return getTasks(groupId, true);
+        return getTasks(groupName, true);
     }
   };

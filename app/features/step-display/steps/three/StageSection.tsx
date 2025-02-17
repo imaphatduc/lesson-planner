@@ -2,15 +2,15 @@ import TaskProcedureGrid from "./TaskProcedureGrid";
 import { LessonContext } from "~/contexts";
 import { Input, TextArea } from "~/features/input";
 import { Fragment, use, useState } from "react";
-import type { GrammarStage } from "~/contexts/useGrammarProcedures";
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 import TaskProcedureDropSlot from "./TaskProcedureDropSlot";
 import type { TaskInStage } from "~/contexts/Task.type";
 
 interface Props {
-  stage: GrammarStage;
+  stage: PPPStage;
   color: string;
   tasks: TaskInStage[];
-  firstTaskInDuplicateSequence: { id: number; stageId: string }[];
+  firstTaskInDuplicateSequence: { id: number; stageName: PPPStage["name"] }[];
 }
 
 const StageSection = ({
@@ -31,7 +31,7 @@ const StageSection = ({
 
   const isTaskDisplayed = (task: TaskInStage) =>
     firstTaskInDuplicateSequence.find(
-      (d) => d.id === task.id && task.stage && d.stageId === task.stage.id
+      (d) => d.id === task.id && task.stage && d.stageName === task.stage.name
     );
 
   return (
@@ -59,7 +59,7 @@ const StageSection = ({
                     onChange={(e) =>
                       editTaskStageTiming(
                         task.id,
-                        stage.id,
+                        stage.name,
                         parseInt(e.target.value)
                       )
                     }
@@ -99,7 +99,7 @@ const StageSection = ({
                       }
                     />
                     <button
-                      className="px-3 py-1 rounded-b-sm bg-green-700 hover:bg-green-800 transition cursor-pointer"
+                      className="font-normal text-white px-3 py-1 rounded-b-sm bg-green-700 hover:bg-green-800 transition cursor-pointer"
                       onClick={() => setEditingTaskInstructions(false)}
                     >
                       Done
@@ -112,7 +112,7 @@ const StageSection = ({
                     `: ${task.instructions}`
                   ) : (
                     <button
-                      className="mx-2 font-normal bg-neutral-600 hover:bg-neutral-700 p-1 rounded-sm cursor-pointer"
+                      className="mx-2 font-normal transition bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-600 dark:hover:bg-neutral-700 p-1 rounded-sm cursor-pointer"
                       onClick={() => setEditingTaskInstructions(true)}
                     >
                       Add instructions
@@ -131,12 +131,12 @@ const StageSection = ({
             <TaskProcedureGrid
               key={procedure.id}
               taskId={task.id}
-              stageId={stage.id}
+              stageName={stage.name}
               procedure={procedure}
             />
           ))}
           {!preview ? (
-            <TaskProcedureDropSlot stageId={stage.id} taskId={task.id} />
+            <TaskProcedureDropSlot stageName={stage.name} taskId={task.id} />
           ) : (
             <div className="col-span-2"></div>
           )}

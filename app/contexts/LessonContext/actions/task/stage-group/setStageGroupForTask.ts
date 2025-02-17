@@ -2,9 +2,11 @@ import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 import { setTasks } from "../setTasks";
 import { currentTargetLanguageItemGoodForTask } from "./currentTargetLanguageItemGoodForTask";
 import { stageGroupExistInTask } from "./stageGroupExistInTask";
+import type { PPPStageGroup } from "~/contexts/usePPPProcedures";
 
 export const setStageGroupForTask =
-  (props: ActionProps) => (groupId: string, taskId: number) => {
+  (props: ActionProps) =>
+  (groupName: PPPStageGroup["name"], taskId: number) => {
     const { currentTargetLanguageItemId } = props;
 
     setTasks(props)((task) => {
@@ -15,13 +17,13 @@ export const setStageGroupForTask =
           return {
             ...task,
             stageGroups: !stageGroupExistInTask(currentTargetLanguageItemId)(
-              groupId,
+              groupName,
               task
             )
               ? [
                   ...task.stageGroups,
                   {
-                    id: groupId,
+                    name: groupName,
                     targetLanguageItemId: currentTargetLanguageItemId,
                   },
                 ]
@@ -29,14 +31,14 @@ export const setStageGroupForTask =
           };
         }
 
-        if (groupId === "2") {
+        if (groupName === "Presentation") {
           return {
             ...task,
             stageGroups: task.stageGroups.filter(
               (group) =>
                 !(
                   group.targetLanguageItemId === currentTargetLanguageItemId &&
-                  group.id === groupId
+                  group.name === groupName
                 )
             ),
           };

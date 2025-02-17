@@ -4,14 +4,15 @@ import ProcedureInput from "./ProcedureInput";
 import AddProcedureButtonGrid from "./AddProcedureButtonGrid";
 import { LessonContext } from "~/contexts";
 import { getEditors } from "~/features/rich-text";
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 
 interface Props {
   taskId: number;
-  stageId: string;
+  stageName: PPPStage["name"];
   procedureId?: number;
 }
 
-const ProcedureInputGrid = ({ taskId, stageId, procedureId }: Props) => {
+const ProcedureInputGrid = ({ taskId, stageName, procedureId }: Props) => {
   const { addProcedure } = use(LessonContext);
 
   const [pendingProcedure, setPendingProcedure] = useState({
@@ -30,10 +31,10 @@ const ProcedureInputGrid = ({ taskId, stageId, procedureId }: Props) => {
     });
   };
 
-  const addTaskProcedure = (taskId: number, stageId: string) => {
+  const addTaskProcedure = (taskId: number, stageName: PPPStage["name"]) => {
     addProcedure(
       taskId,
-      stageId,
+      stageName,
       pendingProcedure.activities,
       pendingProcedure.content,
       procedureId
@@ -60,7 +61,7 @@ const ProcedureInputGrid = ({ taskId, stageId, procedureId }: Props) => {
             <ProcedureInput editor={contentEditor} />
             <AddProcedureButtonGrid
               onClick={() => {
-                addTaskProcedure(taskId, stageId);
+                addTaskProcedure(taskId, stageName);
                 activitiesEditor.commands.setContent("");
                 contentEditor.commands.setContent("");
               }}

@@ -1,25 +1,26 @@
+import type { PPPStage } from "~/contexts/usePPPProcedures";
 import { setTask } from "../setTask";
 import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const removeTaskFromStage =
-  (props: ActionProps) => (stageId: string, taskId: number) => {
+  (props: ActionProps) => (stage: PPPStage, taskId: number) => {
     setTask(props)(taskId, (task) => {
       const { currentTargetLanguageItemId } = props;
 
-      if (stageId.startsWith("0.") || stageId.startsWith("4.")) {
+      if (stage.group === "Lead-in" || stage.group === "Production") {
         return {
           ...task,
-          stages: task.stages.filter((stage) => stage.id !== stageId),
+          stages: task.stages.filter((stage) => stage.name !== stage.name),
         };
       }
 
       return {
         ...task,
         stages: task.stages.filter(
-          (stage) =>
+          (d) =>
             !(
-              stage.targetLanguageItemId === currentTargetLanguageItemId &&
-              stage.id === stageId
+              d.targetLanguageItemId === currentTargetLanguageItemId &&
+              d.name === stage.name
             )
         ),
       };
