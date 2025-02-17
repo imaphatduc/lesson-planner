@@ -1,11 +1,9 @@
-import { use } from "react";
-import type { Lesson, LessonMetadata } from "~/contexts/Lesson.type";
-import { MyLessonsContext } from "~/contexts/MyLessonsContext";
+import type { Lesson } from "~/contexts/Lesson.type";
+import type { ActionProps } from "../../LessonContext";
 
 export const setCurrentLesson =
-  (metadata: LessonMetadata) => (set: (lesson: Lesson) => Lesson) => {
-    const { setMyLessons, getId } = use(MyLessonsContext);
-
+  ({ metadata, getId, setMyLessons }: ActionProps) =>
+  (set: (lesson: Lesson) => Lesson) => {
     setMyLessons((myLessons) => {
       return myLessons.map((lesson) => {
         if (getId(lesson) === getId(metadata)) {

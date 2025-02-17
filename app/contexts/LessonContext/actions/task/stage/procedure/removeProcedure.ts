@@ -1,10 +1,11 @@
 import type { LessonMetadata } from "~/contexts/Lesson.type";
-import { setStageInTask } from "../setStageInTask";
+import { setStage } from "../setStage";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const removeProcedure =
-  (metadata: LessonMetadata) =>
+  (props: ActionProps) =>
   (taskId: number, stageId: string, procedureId: number) => {
-    setStageInTask(metadata)(taskId, stageId, (stage) => {
+    setStage(props)(taskId, stageId, (stage) => {
       return {
         ...stage,
         procedures: stage.procedures.filter((p) => p.id !== procedureId),

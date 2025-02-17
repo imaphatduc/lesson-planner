@@ -1,11 +1,11 @@
 import { getTasksByStageGroup } from "./getTasksByStageGroup";
 import { getGoodTasksForStageGroup } from "./getGoodTasksForStageGroup";
-import { setStageGroup } from "./setStageGroup";
+import { setStageGroupForTask } from "./setStageGroupForTask";
 import { removeTaskFromStageGroup } from "./removeTaskFromStageGroup";
 
 export {
   getTasksByStageGroup,
   getGoodTasksForStageGroup,
-  setStageGroup,
+  setStageGroupForTask,
   removeTaskFromStageGroup,
 };

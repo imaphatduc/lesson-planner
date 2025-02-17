@@ -42,8 +42,6 @@ export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
 
   const getLessonById = (id: string) => {
     const [grade, book, unit, code] = id.split("-");
-    console.log(grade, book, unit, code);
-    console.log(myLessons);
 
     const lesson = myLessons.find(
       (lesson) =>

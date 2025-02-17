@@ -1,11 +1,10 @@
 import type { Task } from "~/contexts/Task.type";
 import { setCurrentLesson } from "../lesson/setCurrentLesson";
-import type { LessonMetadata } from "~/contexts/Lesson.type";
+import type { ActionProps } from "../../LessonContext";
 
-export const setTasks =
-  (metadata: LessonMetadata) => (set: (task: Task) => Task) => {
-    setCurrentLesson(metadata)((lesson) => ({
-      ...lesson,
-      tasks: lesson.tasks.map(set),
-    }));
-  };
+export const setTasks = (props: ActionProps) => (set: (task: Task) => Task) => {
+  setCurrentLesson(props)((lesson) => ({
+    ...lesson,
+    tasks: lesson.tasks.map(set),
+  }));
+};

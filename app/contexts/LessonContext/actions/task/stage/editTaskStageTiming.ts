@@ -1,10 +1,9 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
-import { setStageInTask } from "./setStageInTask";
+import { setStage } from "./setStage";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const editTaskStageTiming =
-  (metadata: LessonMetadata) =>
-  (taskId: number, stageId: string, timing: number) => {
-    setStageInTask(metadata)(taskId, stageId, (stage) => ({
+  (props: ActionProps) => (taskId: number, stageId: string, timing: number) => {
+    setStage(props)(taskId, stageId, (stage) => ({
       ...stage,
       timing,
     }));

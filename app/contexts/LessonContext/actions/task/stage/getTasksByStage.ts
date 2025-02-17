@@ -1,7 +1,8 @@
-import type { Task, TaskStage } from "~/contexts/Task.type";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
+import type { TaskStage } from "~/contexts/Task.type";
 
 export const getTasksByStage =
-  (tasks: Task[], currentTargetLanguageItemId: number) =>
+  ({ tasks, currentTargetLanguageItemId }: ActionProps) =>
   (stageId: string, targetLanguageItemId?: number) => {
     const _ = (stage: TaskStage) =>
       stage.id === stageId &&

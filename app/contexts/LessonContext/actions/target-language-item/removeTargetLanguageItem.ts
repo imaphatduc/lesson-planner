@@ -1,9 +1,9 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
+import type { ActionProps } from "../../LessonContext";
 import { setCurrentLesson } from "../lesson/setCurrentLesson";
 
 export const removeTargetLanguageItem =
-  (metadata: LessonMetadata) => (id: number) => {
-    setCurrentLesson(metadata)((lesson) => ({
+  (props: ActionProps) => (id: number) => {
+    setCurrentLesson(props)((lesson) => ({
       ...lesson,
       targetLanguageItems: lesson.targetLanguageItems
         .filter((d) => d.id !== id)

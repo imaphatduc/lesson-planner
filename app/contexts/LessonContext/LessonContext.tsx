@@ -1,6 +1,17 @@
-import { createContext, use, useState, type PropsWithChildren } from "react";
+import {
+  createContext,
+  use,
+  useState,
+  type Dispatch,
+  type PropsWithChildren,
+  type SetStateAction,
+} from "react";
 import type { Task, TaskInStage, TaskProcedure } from "../Task.type";
-import type { LessonMetadata, TargetLanguageItem } from "../Lesson.type";
+import type {
+  Lesson,
+  LessonMetadata,
+  TargetLanguageItem,
+} from "../Lesson.type";
 import { MyLessonsContext } from "~/contexts/MyLessonsContext";
 import { setCurrentStep } from "./actions/lesson";
 import {
@@ -12,12 +23,12 @@ import { editTaskInstructions } from "./actions/task";
 import {
   getTasksByStageGroup,
   getGoodTasksForStageGroup,
-  setStageGroup,
+  setStageGroupForTask,
   removeTaskFromStageGroup,
 } from "./actions/task/stage-group";
 import {
   getTasksByStage,
-  setStage,
+  setStageForTask,
   editTaskStageTiming,
   removeTaskFromStage,
 } from "./actions/task/stage";
@@ -53,14 +64,14 @@ interface T {
     targetLanguageItemId?: number
   ) => Task[];
   getGoodTasksForStageGroup: (groupId: string) => Task[];
-  setStageGroup: (groupId: string, taskId: number) => void;
+  setStageGroupForTask: (groupId: string, taskId: number) => void;
   removeTaskFromStageGroup: (groupId: string, taskId: number) => void;
 
   getTasksByStage: (
     stageId: string,
     targetLanguageItemId?: number
   ) => TaskInStage[];
-  setStage: (stageId: string, taskId: number) => void;
+  setStageForTask: (stageId: string, taskId: number) => void;
   editTaskStageTiming: (
     taskId: number,
     stageId: string,
@@ -101,6 +112,15 @@ interface T {
   ) => void;
 }
 
+export interface ActionProps {
+  getId: (metadata: LessonMetadata) => string;
+  setMyLessons: Dispatch<SetStateAction<Lesson[]>>;
+  metadata: T["metadata"];
+  targetLanguageItems: T["targetLanguageItems"];
+  tasks: T["tasks"];
+  currentTargetLanguageItemId: number;
+}
+
 // @ts-expect-error
 export const LessonContext = createContext<T>({});
 
@@ -118,7 +138,7 @@ export const LessonProvider = ({
 
   const togglePreview = () => setPreview((d) => !d);
 
-  const { getLessonById } = use(MyLessonsContext);
+  const { getLessonById, getId, setMyLessons } = use(MyLessonsContext);
 
   const currentLesson = getLessonById(currentLessonId)!;
 
@@ -127,55 +147,41 @@ export const LessonProvider = ({
   const getCurrentTargetLanguageItem = () =>
     targetLanguageItems.find((d) => d.current) ?? targetLanguageItems[0];
 
+  const props: ActionProps = {
+    getId,
+    setMyLessons,
+    metadata,
+    targetLanguageItems,
+    tasks,
+    currentTargetLanguageItemId: getCurrentTargetLanguageItem().id,
+  };
+
   return (
     <LessonContext.Provider
       value={{
         preview,
         togglePreview,
         metadata,
-        setCurrentStep: setCurrentStep(metadata),
+        setCurrentStep: setCurrentStep(props),
         targetLanguageItems,
         getCurrentTargetLanguageItem,
-        setCurrentTargetLanguageItem: setCurrentTargetLanguageItem(metadata),
-        addTargetLanguageItem: addTargetLanguageItem(metadata),
-        removeTargetLanguageItem: removeTargetLanguageItem(metadata),
+        setCurrentTargetLanguageItem: setCurrentTargetLanguageItem(props),
+        addTargetLanguageItem: addTargetLanguageItem(props),
+        removeTargetLanguageItem: removeTargetLanguageItem(props),
         tasks,
-        editTaskInstructions: editTaskInstructions(metadata),
-        getTasksByStageGroup: getTasksByStageGroup(
-          metadata,
-          tasks,
-          getCurrentTargetLanguageItem().id
-        ),
-        getGoodTasksForStageGroup: getGoodTasksForStageGroup(
-          tasks,
-          getCurrentTargetLanguageItem().id
-        ),
-        setStageGroup: setStageGroup(
-          metadata,
-          getCurrentTargetLanguageItem().id
-        ),
-        removeTaskFromStageGroup: removeTaskFromStageGroup(
-          metadata,
-          getCurrentTargetLanguageItem().id
-        ),
-        getTasksByStage: getTasksByStage(
-          tasks,
-          getCurrentTargetLanguageItem().id
-        ),
-        setStage: setStage(
-          metadata,
-          targetLanguageItems,
-          getCurrentTargetLanguageItem().id
-        ),
-        editTaskStageTiming: editTaskStageTiming(metadata),
-        removeTaskFromStage: removeTaskFromStage(
-          metadata,
-          getCurrentTargetLanguageItem().id
-        ),
-        addProcedure: addProcedure(metadata),
-        editProcedure: editProcedure(metadata),
-        moveProcedure: moveProcedure(metadata, tasks),
-        removeProcedure: removeProcedure(metadata),
+        editTaskInstructions: editTaskInstructions(props),
+        getTasksByStageGroup: getTasksByStageGroup(props),
+        getGoodTasksForStageGroup: getGoodTasksForStageGroup(props),
+        setStageGroupForTask: setStageGroupForTask(props),
+        removeTaskFromStageGroup: removeTaskFromStageGroup(props),
+        getTasksByStage: getTasksByStage(props),
+        setStageForTask: setStageForTask(props),
+        editTaskStageTiming: editTaskStageTiming(props),
+        removeTaskFromStage: removeTaskFromStage(props),
+        addProcedure: addProcedure(props),
+        editProcedure: editProcedure(props),
+        moveProcedure: moveProcedure(props),
+        removeProcedure: removeProcedure(props),
       }}
     >
       {children}

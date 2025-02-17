@@ -1,51 +1,20 @@
-import type {
-  LessonMetadata,
-  TargetLanguageItem,
-} from "~/contexts/Lesson.type";
+import type { TaskStage } from "~/contexts/Task.type";
 import { setTask } from "../setTask";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const setStage =
-  (
-    metadata: LessonMetadata,
-    targetLanguageItems: TargetLanguageItem[],
-    currentTargetLanguageItemId: number
-  ) =>
-  (stageId: string, taskId: number) => {
-    setTask(metadata)(taskId, (task) => {
-      if (stageId.startsWith("0.") || stageId.startsWith("4.")) {
-        return {
-          ...task,
-          stages: !task.stages.some((stage) => stage.id === stageId)
-            ? [
-                ...task.stages,
-                ...targetLanguageItems.map((targetLanguageItem) => ({
-                  id: stageId,
-                  targetLanguageItemId: targetLanguageItem.id,
-                  timing: 0,
-                  procedures: [],
-                })),
-              ]
-            : task.stages,
-        };
-      }
-
+  (props: ActionProps) =>
+  (taskId: number, stageId: string, set: (stage: TaskStage) => TaskStage) => {
+    setTask(props)(taskId, (task) => {
       return {
         ...task,
-        stages: !task.stages.some(
-          (stage) =>
-            stage.id === stageId &&
-            stage.targetLanguageItemId === currentTargetLanguageItemId
-        )
-          ? [
-              ...task.stages,
-              {
-                id: stageId,
-                targetLanguageItemId: currentTargetLanguageItemId,
-                timing: 0,
-                procedures: [],
-              },
-            ]
-          : task.stages,
+        stages: task.stages.map((stage) => {
+          if (stage.id === stageId) {
+            return set(stage);
+          }
+
+          return stage;
+        }),
       };
     });
   };

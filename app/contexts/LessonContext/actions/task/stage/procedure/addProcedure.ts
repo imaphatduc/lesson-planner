@@ -1,8 +1,8 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
-import { setStageInTask } from "../setStageInTask";
+import { setStage } from "../setStage";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const addProcedure =
-  (metadata: LessonMetadata) =>
+  (props: ActionProps) =>
   (
     taskId: number,
     stageId: string,
@@ -10,7 +10,7 @@ export const addProcedure =
     content: string,
     procedureId?: number
   ) => {
-    setStageInTask(metadata)(taskId, stageId, (stage) => {
+    setStage(props)(taskId, stageId, (stage) => {
       if (procedureId) {
         let index = stage.procedures.findIndex((p) => p.id === procedureId);
 

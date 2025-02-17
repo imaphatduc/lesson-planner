@@ -1,10 +1,10 @@
 import type { Task } from "~/contexts/Task.type";
-import type { LessonMetadata } from "~/contexts/Lesson.type";
 import { setTasks } from "./setTasks";
+import type { ActionProps } from "../../LessonContext";
 
 export const setTask =
-  (metadata: LessonMetadata) => (taskId: number, set: (task: Task) => Task) => {
-    setTasks(metadata)((task) => {
+  (props: ActionProps) => (taskId: number, set: (task: Task) => Task) => {
+    setTasks(props)((task) => {
       if (task.id === taskId) {
         return set(task);
       }

@@ -1,13 +1,11 @@
-import type {
-  LessonMetadata,
-  TargetLanguageItem,
-} from "~/contexts/Lesson.type";
+import type { TargetLanguageItem } from "~/contexts/Lesson.type";
 import { setCurrentLesson } from "../lesson/setCurrentLesson";
+import type { ActionProps } from "../../LessonContext";
 
 export const setTargetLanguageItems =
-  (metadata: LessonMetadata) =>
+  (props: ActionProps) =>
   (set: (targetLanguageItem: TargetLanguageItem) => TargetLanguageItem) => {
-    setCurrentLesson(metadata)((lesson) => ({
+    setCurrentLesson(props)((lesson) => ({
       ...lesson,
       targetLanguageItems: lesson.targetLanguageItems.map(set),
     }));

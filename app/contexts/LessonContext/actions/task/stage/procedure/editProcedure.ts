@@ -1,8 +1,8 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
 import { setProcedure } from "./setProcedure";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const editProcedure =
-  (metadata: LessonMetadata) =>
+  (props: ActionProps) =>
   (
     id: number,
     taskId: number,
@@ -10,7 +10,7 @@ export const editProcedure =
     activities: string,
     content: string
   ) => {
-    setProcedure(metadata)(taskId, stageId, id, (procedure) => ({
+    setProcedure(props)(taskId, stageId, id, (procedure) => ({
       ...procedure,
       ...(activities.length > 0 ? { activities } : {}),
       ...(content.length > 0 ? { content } : {}),

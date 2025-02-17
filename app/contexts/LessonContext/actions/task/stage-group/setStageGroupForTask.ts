@@ -1,12 +1,13 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 import { setTasks } from "../setTasks";
 import { currentTargetLanguageItemGoodForTask } from "./currentTargetLanguageItemGoodForTask";
 import { stageGroupExistInTask } from "./stageGroupExistInTask";
 
-export const setStageGroup =
-  (metadata: LessonMetadata, currentTargetLanguageItemId: number) =>
-  (groupId: string, taskId: number) => {
-    setTasks(metadata)((task) => {
+export const setStageGroupForTask =
+  (props: ActionProps) => (groupId: string, taskId: number) => {
+    const { currentTargetLanguageItemId } = props;
+
+    setTasks(props)((task) => {
       if (
         currentTargetLanguageItemGoodForTask(currentTargetLanguageItemId)(task)
       ) {

@@ -1,10 +1,11 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
 import { setTask } from "../setTask";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const removeTaskFromStage =
-  (metadata: LessonMetadata, currentTargetLanguageItemId: number) =>
-  (stageId: string, taskId: number) => {
-    setTask(metadata)(taskId, (task) => {
+  (props: ActionProps) => (stageId: string, taskId: number) => {
+    setTask(props)(taskId, (task) => {
+      const { currentTargetLanguageItemId } = props;
+
       if (stageId.startsWith("0.") || stageId.startsWith("4.")) {
         return {
           ...task,

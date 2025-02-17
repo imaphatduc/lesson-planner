@@ -13,7 +13,7 @@ const TargetLanguageItemSection = ({ targetLanguageItem }: Props) => {
     metadata,
     setCurrentTargetLanguageItem,
     getGoodTasksForStageGroup,
-    setStageGroup,
+    setStageGroupForTask,
     getTasksByStageGroup,
     removeTaskFromStageGroup,
   } = use(LessonContext);
@@ -52,7 +52,7 @@ const TargetLanguageItemSection = ({ targetLanguageItem }: Props) => {
             (task) => task.id
           )}
           setSelectedOption={(groupId, taskId: number) =>
-            setStageGroup(groupId, taskId)
+            setStageGroupForTask(groupId, taskId)
           }
           removeSelectedOption={(taskId: number) =>
             removeTaskFromStageGroup("1", taskId)
@@ -73,7 +73,7 @@ const TargetLanguageItemSection = ({ targetLanguageItem }: Props) => {
             getTasksByStageGroup("2", metadata.currentStep)[0]?.id
           }
           setSelectedOption={(groupId, taskId: number) =>
-            setStageGroup(groupId, taskId)
+            setStageGroupForTask(groupId, taskId)
           }
           display={display}
         />
@@ -93,7 +93,7 @@ const TargetLanguageItemSection = ({ targetLanguageItem }: Props) => {
             (task) => task.id
           )}
           setSelectedOption={(groupId, taskId: number) =>
-            setStageGroup(groupId, taskId)
+            setStageGroupForTask(groupId, taskId)
           }
           removeSelectedOption={(taskId: number) =>
             removeTaskFromStageGroup("3", taskId)

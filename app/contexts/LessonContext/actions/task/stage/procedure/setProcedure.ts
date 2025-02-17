@@ -1,16 +1,16 @@
 import type { TaskProcedure } from "~/contexts/Task.type";
-import type { LessonMetadata } from "~/contexts/Lesson.type";
-import { setStageInTask } from "../setStageInTask";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
+import { setStage } from "../setStage";
 
 export const setProcedure =
-  (metadata: LessonMetadata) =>
+  (props: ActionProps) =>
   (
     taskId: number,
     stageId: string,
     procedureId: number,
     set: (procedure: TaskProcedure) => TaskProcedure
   ) => {
-    setStageInTask(metadata)(taskId, stageId, (stage) => {
+    setStage(props)(taskId, stageId, (stage) => {
       return {
         ...stage,
         procedures: stage.procedures.map((procedure) => {

@@ -1,9 +1,9 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
+import type { ActionProps } from "../../LessonContext";
 import { setTargetLanguageItems } from "./setTargetLanguageItems";
 
 export const setCurrentTargetLanguageItem =
-  (metadata: LessonMetadata) => (id: number, newName?: string) => {
-    setTargetLanguageItems(metadata)((targetLanguageItem) => {
+  (props: ActionProps) => (id: number, newName?: string) => {
+    setTargetLanguageItems(props)((targetLanguageItem) => {
       if (targetLanguageItem.id === id) {
         return {
           ...targetLanguageItem,

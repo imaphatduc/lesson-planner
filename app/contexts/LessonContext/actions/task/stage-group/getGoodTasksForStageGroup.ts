@@ -1,8 +1,9 @@
-import type { Task } from "~/contexts/Task.type";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 import { currentTargetLanguageItemGoodForTask } from "./currentTargetLanguageItemGoodForTask";
 
 export const getGoodTasksForStageGroup =
-  (tasks: Task[], currentTargetLanguageItemId: number) => () => {
+  ({ tasks, currentTargetLanguageItemId }: ActionProps) =>
+  () => {
     return tasks.filter((task) =>
       currentTargetLanguageItemGoodForTask(currentTargetLanguageItemId)(task)
     );

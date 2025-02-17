@@ -1,9 +1,10 @@
 import type { LessonMetadata } from "~/contexts/Lesson.type";
 import type { Task, TaskProcedure } from "~/contexts/Task.type";
 import { setCurrentLesson } from "../../../lesson/setCurrentLesson";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const moveProcedure =
-  (metadata: LessonMetadata, tasks: Task[]) =>
+  (props: ActionProps) =>
   (
     pending: {
       stageId: string;
@@ -16,6 +17,8 @@ export const moveProcedure =
       procedureId: number;
     }
   ) => {
+    const { tasks } = props;
+
     if (
       pending.stageId === target.stageId &&
       pending.taskId === target.taskId &&
@@ -48,7 +51,7 @@ export const moveProcedure =
 
     const { stageId, taskId, procedureId } = target;
 
-    setCurrentLesson(metadata)((lesson) => ({
+    setCurrentLesson(props)((lesson) => ({
       ...lesson,
       tasks: tasksAfterRemoved.map((task) => {
         if (task.id === taskId) {

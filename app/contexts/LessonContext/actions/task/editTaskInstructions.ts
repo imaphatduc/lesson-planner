@@ -1,9 +1,9 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
+import type { ActionProps } from "../../LessonContext";
 import { setTask } from "./setTask";
 
 export const editTaskInstructions =
-  (metadata: LessonMetadata) => (taskId: number, instructions: string) => {
-    setTask(metadata)(taskId, (task) => ({
+  (props: ActionProps) => (taskId: number, instructions: string) => {
+    setTask(props)(taskId, (task) => ({
       ...task,
       instructions,
     }));

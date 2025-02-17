@@ -1,9 +1,9 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
+import type { ActionProps } from "../../LessonContext";
 import { setCurrentLesson } from "./setCurrentLesson";
 import { steps } from "~/features/step-display";
 
-export const setCurrentStep = (metadata: LessonMetadata) => (axis: number) => {
-  setCurrentLesson(metadata)((lesson) => {
+export const setCurrentStep = (props: ActionProps) => (axis: number) => {
+  setCurrentLesson(props)((lesson) => {
     const newCurrentStep = lesson.currentStep + (axis > 0 ? 1 : -1);
 
     return {

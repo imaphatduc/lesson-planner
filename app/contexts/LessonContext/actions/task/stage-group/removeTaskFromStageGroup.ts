@@ -1,10 +1,11 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 import { setTasks } from "../setTasks";
 
 export const removeTaskFromStageGroup =
-  (metadata: LessonMetadata, currentTargetLanguageItemId: number) =>
-  (groupId: string, taskId: number) => {
-    setTasks(metadata)((task) => {
+  (props: ActionProps) => (groupId: string, taskId: number) => {
+    setTasks(props)((task) => {
+      const { currentTargetLanguageItemId } = props;
+
       if (task.id === taskId) {
         return {
           ...task,

@@ -12,7 +12,7 @@ const StepTwo = () => {
     targetLanguageItems,
     getCurrentTargetLanguageItem,
     setCurrentTargetLanguageItem,
-    setStage,
+    setStageForTask,
   } = use(LessonContext);
 
   const handleDragEnd = (e: DragEndEvent) => {
@@ -22,7 +22,7 @@ const StepTwo = () => {
     const overId = over?.id;
 
     if (typeof overId === "string" && typeof activeId === "number") {
-      setStage(overId, activeId);
+      setStageForTask(overId, activeId);
     }
   };
 
@@ -39,7 +39,7 @@ const StepTwo = () => {
             setActiveId={setCurrentTargetLanguageItem}
           >
             {targetLanguageItems.map((targetLanguageItem) => (
-              <div className="space-y-5">
+              <div key={targetLanguageItem.id} className="space-y-5">
                 {targetLanguageItem.id === getCurrentTargetLanguageItem().id &&
                   grammarStageGroups
                     .filter((d) => d.id !== "0" && d.id !== "4")

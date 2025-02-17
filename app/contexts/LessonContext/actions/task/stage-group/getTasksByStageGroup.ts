@@ -1,12 +1,7 @@
-import type { LessonMetadata } from "~/contexts/Lesson.type";
-import type { Task } from "~/contexts/Task.type";
+import type { ActionProps } from "~/contexts/LessonContext/LessonContext";
 
 export const getTasksByStageGroup =
-  (
-    metadata: LessonMetadata,
-    tasks: Task[],
-    currentTargetLanguageItemId: number
-  ) =>
+  ({ metadata, tasks, currentTargetLanguageItemId }: ActionProps) =>
   (groupId: string, targetLanguageItemId?: number) => {
     const _ = (d: number) =>
       targetLanguageItemId !== undefined
