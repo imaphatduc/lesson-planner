@@ -8,9 +8,7 @@ interface Props {
 const PanelWrapper = ({ type, children }: PropsWithChildren<Props>) => {
   return (
     <Panel
-      className={
-        type === "book" ? "h-screen py-4 pl-4 pr-2" : "h-screen py-4 pr-4 pl-2"
-      }
+      className={type === "book" ? "py-4 pl-4 pr-2" : "py-4 pr-4 pl-2"}
       defaultSize={type === "book" ? 40 : 60}
       minSize={30}
       autoFocus

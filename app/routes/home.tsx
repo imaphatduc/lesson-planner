@@ -17,7 +17,7 @@ export default function Home() {
         <div className="space-y-5">
           <h2 className="text-red-400">My Lesson Plans</h2>
           <NavLink to="/add">
-            <div className="rounded-md p-2 bg-teal-700 hover:bg-teal-800 transition w-fit mb-5">
+            <div className="rounded-md p-2 text-white bg-teal-700 hover:bg-teal-800 transition w-fit mb-5">
               Add lesson
             </div>
           </NavLink>
@@ -58,7 +58,7 @@ export default function Home() {
         {previewingLessonId && (
           <>
             <NavLink to={`/planning/${previewingLessonId}`}>
-              <div className="rounded-md p-2 bg-teal-700 hover:bg-teal-800 transition w-fit mb-5">
+              <div className="rounded-md p-2 text-white bg-teal-700 hover:bg-teal-800 transition w-fit mb-5">
                 Edit
               </div>
             </NavLink>

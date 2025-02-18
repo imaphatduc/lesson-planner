@@ -8,8 +8,13 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import { MyLessonsProvider } from "./contexts/MyLessonsContext";
+import {
+  MyLessonsContext,
+  MyLessonsProvider,
+} from "./contexts/MyLessonsContext";
 import "./app.css";
+import { use } from "react";
+import { Moon, Sun } from "lucide-react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -41,13 +46,31 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <MyLessonsProvider>{children}</MyLessonsProvider>
+        <MyLessonsProvider>
+          <NavbarLayout>{children}</NavbarLayout>
+        </MyLessonsProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
 }
+
+const NavbarLayout = ({ children }: { children: React.ReactNode }) => {
+  const { darkMode, setDarkMode } = use(MyLessonsContext);
+
+  return (
+    <div>
+      <button
+        className="mt-4 ml-4 p-2 hover:bg-neutral-300 hover:dark:bg-neutral-600 rounded-md cursor-pointer"
+        onClick={() => (darkMode ? setDarkMode(false) : setDarkMode(true))}
+      >
+        {darkMode ? <Moon /> : <Sun />}
+      </button>
+      <div className="h-screen">{children}</div>
+    </div>
+  );
+};
 
 export default function App() {
   return <Outlet />;

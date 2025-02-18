@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import type { PropsWithChildren } from "react";
+import { Plus, X } from "lucide-react";
 
 interface Props {
   tabs: {
@@ -43,17 +44,17 @@ const Tabs = ({
                   removeTab(tab.id);
                 }}
               >
-                x
+                <X size={12} />
               </div>
             )}
           </motion.div>
         ))}
         {addTab && (
           <button
-            className="skew-x-16 p-2 w-5 h-5 flex justify-center items-center rounded-full text-white bg-neutral-500 hover:bg-neutral-600"
+            className="skew-x-16 w-5 h-5 flex justify-center items-center rounded-full text-white bg-neutral-500 hover:bg-neutral-600"
             onClick={addTab}
           >
-            +
+            <Plus size={12} />
           </button>
         )}
       </div>

@@ -42,7 +42,7 @@ const StageGroupSection = ({ group, targetLanguageItem }: Props) => {
 
   return (
     <>
-      <div className="p-2 ">
+      <div className="p-2">
         <div className="font-bold">{group.name}</div>
         <div>({timing} minutes)</div>
       </div>

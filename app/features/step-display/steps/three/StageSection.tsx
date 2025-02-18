@@ -49,7 +49,7 @@ const StageSection = ({
             }}
           >
             {!preview && (
-              <div className="h-full flex flex-col items-end text-right">
+              <div className="h-full flex flex-col items-end text-right pt-4 pb-10">
                 <p className={color}>{stage.name}</p>
                 <div className="flex items-center gap-1">
                   <p>(</p>
@@ -80,8 +80,8 @@ const StageSection = ({
               <div
                 className={
                   task.instructions && !editingTaskInstructions && !preview
-                    ? "p-2 font-bold hover:bg-gray-700 cursor-pointer"
-                    : "p-2 font-bold"
+                    ? "px-2 pt-4 pb-16 font-bold hover:bg-gray-700 cursor-pointer"
+                    : "px-2 py-2 font-bold"
                 }
                 onClick={
                   !editingTaskInstructions && !preview
@@ -136,7 +136,9 @@ const StageSection = ({
             />
           ))}
           {!preview ? (
-            <TaskProcedureDropSlot stageName={stage.name} taskId={task.id} />
+            <div className="pt-4 pb-16 col-span-2">
+              <TaskProcedureDropSlot stageName={stage.name} taskId={task.id} />
+            </div>
           ) : (
             <div className="col-span-2"></div>
           )}
