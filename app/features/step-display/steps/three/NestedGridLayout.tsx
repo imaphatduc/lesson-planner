@@ -7,10 +7,10 @@ interface Props {
 
 const NestedGridLayout = ({ Left, Right }: Props) => {
   return (
-    <div className="grid grid-cols-2 col-span-2">
-      <div className="p-2">{Left}</div>
-      <div className="p-2 border-l">{Right}</div>
-    </div>
+    <>
+      <td className="p-2 align-top">{Left}</td>
+      <td className="p-2 align-top">{Right}</td>
+    </>
   );
 };
 

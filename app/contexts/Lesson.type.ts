@@ -1,11 +1,11 @@
 import type { Task } from "./Task.type";
 
 export const lessonReference = {
-  // A: "Vocabulary",
+  A: "Vocabulary",
   B: "Grammar",
   // C: "Listening",
   D: "Grammar",
-  // E: "Word skills",
+  E: "Word skills",
   // F: "Reading",
   // G: "Speaking",
   // H: "Writing",
@@ -27,6 +27,7 @@ export interface Lesson {
   book: "Friends Global";
   grade: number;
   unit: number;
+  unitName: string;
   page: number;
   image: string;
   targetLanguageItems: TargetLanguageItem[];

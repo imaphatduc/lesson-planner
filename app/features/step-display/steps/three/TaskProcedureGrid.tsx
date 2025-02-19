@@ -33,23 +33,26 @@ const TaskProcedureGrid = ({ taskId, stageName, procedure }: Props) => {
 
   return !editing ? (
     <>
-      {!preview ? (
-        <TaskProcedureDropSlot
-          taskId={taskId}
-          stageName={stageName}
-          procedureId={procedure.id}
-        />
-      ) : (
-        <div className="col-span-2"></div>
-      )}
+      <>
+        {!preview ? (
+          <TaskProcedureDropSlot
+            taskId={taskId}
+            stageName={stageName}
+            procedureId={procedure.id}
+          />
+        ) : (
+          <></>
+        )}
+      </>
       <DragItem
+        as="tr"
         disabled={preview}
         id={`${stageName}-${taskId}-${procedure.id}`}
         data={{ stageName, taskId, procedure }}
         className={
           hovering && !preview
-            ? " col-span-2 relative cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700"
-            : " col-span-2 relative"
+            ? " relative cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700"
+            : " relative"
         }
         onClickCapture={() => setEditing(true)}
         onMouseEnter={() => setHovering(true)}
@@ -69,15 +72,14 @@ const TaskProcedureGrid = ({ taskId, stageName, procedure }: Props) => {
       </DragItem>
     </>
   ) : (
-    <>
-      <div></div>
+    <tr>
       <EditingProcedureInputGrid
         taskId={taskId}
         stageName={stageName}
         procedure={procedure}
         setEditing={setEditing}
       />
-    </>
+    </tr>
   );
 };
 

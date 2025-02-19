@@ -62,7 +62,7 @@ const NavbarLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <button
-        className="mt-4 ml-4 p-2 hover:bg-neutral-300 hover:dark:bg-neutral-600 rounded-md cursor-pointer"
+        className=" shadow-md mt-4 ml-4 p-2 hover:bg-neutral-300 hover:dark:bg-neutral-600 rounded-md cursor-pointer"
         onClick={() => (darkMode ? setDarkMode(false) : setDarkMode(true))}
       >
         {darkMode ? <Moon /> : <Sun />}

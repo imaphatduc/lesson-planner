@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+  --font-sans: "Inter", "Cambria", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   --animate-dash-blink: dash-blink 1.5s linear infinite;
@@ -45,6 +45,21 @@
   .prose li {
     margin-bottom: 0.5rem;
   }
+}
+
+.a4-print {
+  width: 210mm;
+  height: 297mm;
+  padding: 10mm;
+  background: white;
+}
+
+table td {
+  @apply p-2;
+}
+
+h1 {
+  @apply text-3xl font-bold;
 }
 
 h2 {

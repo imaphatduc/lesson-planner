@@ -1,4 +1,4 @@
-import { Fragment, use } from "react";
+import { use } from "react";
 import { LessonContext, usePPPProcedures } from "~/contexts";
 import type { PPPStage, PPPStageGroup } from "~/contexts/usePPPProcedures";
 import StageSection from "./StageSection";
@@ -42,12 +42,14 @@ const StageGroupSection = ({ group, targetLanguageItem }: Props) => {
 
   return (
     <>
-      <div className="p-2">
-        <div className="font-bold">{group.name}</div>
-        <div>({timing} minutes)</div>
-      </div>
-      <div className=""></div>
-      <div className=""></div>
+      <tr>
+        <td className="p-2">
+          <div className="font-bold">{group.name}</div>
+          <div>({timing} minutes)</div>
+        </td>
+        <td className=""></td>
+        <td className=""></td>
+      </tr>
       {getStagesInGroup(group.name).map((stage) => (
         <StageSection
           key={stage.name}
@@ -57,11 +59,7 @@ const StageGroupSection = ({ group, targetLanguageItem }: Props) => {
           firstTaskInDuplicateSequence={firstTaskInDuplicateSequence}
         />
       ))}
-      <>
-        <div className="border-b"></div>
-        <div className="border-b"></div>
-        <div className="border-b"></div>
-      </>
+      {group.name !== "Production" && <tr className="border-b"></tr>}
     </>
   );
 };

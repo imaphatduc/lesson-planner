@@ -3,11 +3,7 @@ interface Props {
 }
 
 const ColumnTitle = ({ title }: Props) => {
-  return (
-    <div className="font-bold flex text-center justify-center items-center p-2 border-b ">
-      {title}
-    </div>
-  );
+  return <div className="font-bold p-2">{title}</div>;
 };
 
 export default ColumnTitle;

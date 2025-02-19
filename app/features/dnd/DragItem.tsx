@@ -1,7 +1,14 @@
 import { useDraggable } from "@dnd-kit/core";
-import type { PropsWithChildren, ReactNode, HTMLAttributes } from "react";
+import {
+  type JSX,
+  type PropsWithChildren,
+  type ReactNode,
+  type HTMLAttributes,
+  createElement,
+} from "react";
 
 type Props = Omit<HTMLAttributes<HTMLDivElement>, "id"> & {
+  as?: keyof JSX.IntrinsicElements;
   id: number | string;
   disabled?: boolean;
   buttonWhenDisabled?: ReactNode;
@@ -9,6 +16,7 @@ type Props = Omit<HTMLAttributes<HTMLDivElement>, "id"> & {
 };
 
 const DragItem = ({
+  as = "div",
   id,
   disabled,
   buttonWhenDisabled,
@@ -31,22 +39,20 @@ const DragItem = ({
         cursor: !disabled ? "pointer" : "default",
       };
 
-  return !disabled ? (
-    <div
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      {...props}
-      style={style}
-    >
-      {children}
-    </div>
-  ) : (
-    <div {...props}>
-      {children}
-      {buttonWhenDisabled}
-    </div>
-  );
+  return !disabled
+    ? createElement(
+        as,
+        { ref: setNodeRef, ...attributes, ...listeners, ...props, style },
+        children
+      )
+    : createElement(
+        as,
+        props,
+        <>
+          {children}
+          {buttonWhenDisabled}
+        </>
+      );
 };
 
 export default DragItem;
