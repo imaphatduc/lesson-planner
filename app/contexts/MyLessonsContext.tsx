@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useEffect,
-  useState,
-  type Dispatch,
-  type PropsWithChildren,
-  type SetStateAction,
-} from "react";
+import { createContext, useEffect, type PropsWithChildren } from "react";
 import {
   lessonReference,
   type Lesson,
@@ -37,15 +30,15 @@ export const MyLessonsContext = createContext<MyLessons>({
 export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
   const [darkMode, setDarkMode] = useLocalStorage("dark-mode", false);
 
-  // const [ls] = useLocalStorage<Lesson[]>("my-lessons", []);
-  // useEffect(() => {
-  //   const _ = async () => {
-  //     for (let l of ls) {
-  //       await db.myLessons.add(l);
-  //     }
-  //   };
-  //   _();
-  // }, []);
+  const [ls] = useLocalStorage<Lesson[]>("my-lessons", []);
+  useEffect(() => {
+    const _ = async () => {
+      for (let l of ls) {
+        await db.myLessons.add(l);
+      }
+    };
+    _();
+  }, []);
 
   const myLessons = useLiveQuery(() => db.myLessons.toArray()) ?? [];
 
