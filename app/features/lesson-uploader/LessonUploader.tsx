@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { Lesson } from "~/contexts";
+import { XButton } from "../x-button";
 
 interface Props {
   pendingLesson: Lesson;
@@ -7,18 +8,15 @@ interface Props {
 }
 
 const LessonUploader = ({ pendingLesson, setPendingLesson }: Props) => {
-  const [image, setImage] = useState<File | null>(null);
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImage(file);
+      const src = URL.createObjectURL(file);
 
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setPendingLesson({ ...pendingLesson, image: base64String });
+        setPendingLesson({ ...pendingLesson, image: src });
       };
 
       reader.readAsDataURL(file);
@@ -26,7 +24,6 @@ const LessonUploader = ({ pendingLesson, setPendingLesson }: Props) => {
   };
 
   const removeImage = () => {
-    setImage(null);
     setPendingLesson({ ...pendingLesson, image: "" });
   };
 
@@ -55,12 +52,7 @@ const LessonUploader = ({ pendingLesson, setPendingLesson }: Props) => {
             alt="Preview"
             className="w-full h-full rounded-md"
           />
-          <button
-            onClick={removeImage}
-            className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
-          >
-            x
-          </button>
+          <XButton onClick={removeImage} />
         </div>
       )}
     </div>

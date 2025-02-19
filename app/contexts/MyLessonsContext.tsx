@@ -1,6 +1,7 @@
 import {
   createContext,
   useEffect,
+  useState,
   type Dispatch,
   type PropsWithChildren,
   type SetStateAction,
@@ -12,12 +13,13 @@ import {
   type LessonMetadata,
 } from "./Lesson.type";
 import { useLocalStorage } from "usehooks-ts";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "~/db";
 
 interface MyLessons {
   darkMode: boolean;
   setDarkMode: (d: boolean) => void;
   myLessons: Lesson[];
-  setMyLessons: Dispatch<SetStateAction<Lesson[]>>;
   getId: (metadata: LessonMetadata) => string;
   getLessonById: (id: string) => Lesson | undefined;
   addLesson: (d: Lesson) => void;
@@ -27,16 +29,25 @@ export const MyLessonsContext = createContext<MyLessons>({
   darkMode: false,
   setDarkMode: () => {},
   myLessons: [],
-  setMyLessons: () => {},
   getId: () => "",
   getLessonById: () => undefined,
   addLesson: () => {},
 });
 
 export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
-  const [myLessons, setMyLessons] = useLocalStorage<Lesson[]>("my-lessons", []);
-
   const [darkMode, setDarkMode] = useLocalStorage("dark-mode", false);
+
+  // const [ls] = useLocalStorage<Lesson[]>("my-lessons", []);
+  // useEffect(() => {
+  //   const _ = async () => {
+  //     for (let l of ls) {
+  //       await db.myLessons.add(l);
+  //     }
+  //   };
+  //   _();
+  // }, []);
+
+  const myLessons = useLiveQuery(() => db.myLessons.toArray()) ?? [];
 
   useEffect(() => {
     if (darkMode) {
@@ -46,8 +57,8 @@ export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
     }
   }, [darkMode]);
 
-  const addLesson = (lesson: Lesson) => {
-    setMyLessons([...myLessons, lesson]);
+  const addLesson = async (lesson: Lesson) => {
+    await db.myLessons.add(lesson);
   };
 
   const getId = (metadata: LessonMetadata) =>
@@ -75,7 +86,6 @@ export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
         darkMode,
         setDarkMode,
         myLessons,
-        setMyLessons,
         getId,
         getLessonById,
         addLesson,

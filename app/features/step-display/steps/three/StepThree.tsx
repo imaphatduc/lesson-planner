@@ -79,7 +79,7 @@ const EditedTable = ({ ref }: { ref?: RefObject<HTMLTableElement | null> }) => {
         over.data.current as {
           stageName: PPPStage["name"];
           taskId: number;
-          procedureId: number;
+          procedureId?: number;
         }
       );
     }
@@ -87,7 +87,7 @@ const EditedTable = ({ ref }: { ref?: RefObject<HTMLTableElement | null> }) => {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <table ref={ref} className="border-x border-t">
+      <table ref={ref} className="border">
         <Columns />
         <tbody>
           {_("Lead-in") && (
@@ -302,23 +302,27 @@ const PreviewingForExport = () => {
   };
 
   return (
-    <div className="fixed top-4 left-4 bottom-4 right-4 z-20 rounded-md p-10 bg-neutral-200 overflow-auto flex flex-col items-center">
+    <div className="fixed top-4 left-4 bottom-4 right-4 z-20 rounded-md bg-neutral-200 overflow-auto flex flex-col items-center">
       <XButton
         onClick={() => togglePreview()}
         style={{
-          top: 20,
-          right: 20,
+          position: "fixed",
+          zIndex: 50,
+          top: 45,
+          right: 60,
           width: 20,
           height: 20,
         }}
       />
-      <button
-        disabled={exporting}
-        className="mb-5 p-2 text-white bg-teal-700 rounded-sm hover:bg-teal-800 cursor-pointer transition"
-        onClick={handleExportPDF}
-      >
-        Export PDF
-      </button>
+      <div className="sticky top-0 z-30 w-full bg-neutral-200 flex justify-center items-center">
+        <button
+          disabled={exporting}
+          className="my-5 p-2 text-white bg-teal-700 rounded-sm hover:bg-teal-800 cursor-pointer transition"
+          onClick={handleExportPDF}
+        >
+          Export PDF
+        </button>
+      </div>
       <div ref={pdfRef}>
         <div className="a4-print">
           <Heading ref={headingRef} />
@@ -337,7 +341,7 @@ const PreviewingForExport = () => {
             </Fragment>
           ))}
       </div>
-      <div>End of preview</div>
+      <div className="mb-5">End of preview</div>
       {data.length === 0 && (
         <div className="a4-print opacity-0">
           <EditedTable ref={previewingTableRef} />

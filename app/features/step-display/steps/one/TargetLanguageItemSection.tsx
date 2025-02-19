@@ -11,7 +11,6 @@ interface Props {
 
 const TargetLanguageItemSection = ({ targetLanguageItem }: Props) => {
   const {
-    metadata,
     setCurrentTargetLanguageItem,
     getGoodTasksForStageGroup,
     setStageGroupForTask,

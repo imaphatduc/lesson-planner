@@ -38,7 +38,8 @@ export const addProcedure =
         };
       }
 
-      const id = stage.procedures.reduce((max, p) => Math.max(p.id, max), 0);
+      const id =
+        stage.procedures.reduce((max, p) => Math.max(p.id, max), 0) + 1;
 
       return {
         ...stage,

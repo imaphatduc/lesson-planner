@@ -64,9 +64,10 @@ const TaskProcedureGrid = ({ taskId, stageName, procedure }: Props) => {
         />
         {hovering && !preview && (
           <XButton
-            onClickCapture={() =>
-              removeProcedure(taskId, stageName, procedure.id)
-            }
+            onMouseDownCapture={(e) => {
+              e.stopPropagation();
+              removeProcedure(taskId, stageName, procedure.id);
+            }}
           />
         )}
       </DragItem>

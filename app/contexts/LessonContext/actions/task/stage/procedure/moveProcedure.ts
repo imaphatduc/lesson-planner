@@ -14,7 +14,7 @@ export const moveProcedure =
     target: {
       stageName: string;
       taskId: number;
-      procedureId: number;
+      procedureId?: number;
     }
   ) => {
     const { tasks } = props;
@@ -64,14 +64,18 @@ export const moveProcedure =
                 );
 
                 if (index === -1) {
-                  return stage;
+                  index =
+                    stage.procedures.reduce(
+                      (max, p) => Math.max(p.id, max),
+                      0
+                    ) + 1;
                 }
 
                 const procedures = [
                   ...stage.procedures.slice(0, index),
                   {
                     ...pending.procedure,
-                    id: procedureId,
+                    id: index,
                   },
                   ...stage.procedures.slice(index).map((p) => ({
                     ...p,

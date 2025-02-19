@@ -109,7 +109,7 @@ interface T {
     target: {
       stageName: PPPStage["name"];
       taskId: number;
-      procedureId: number;
+      procedureId?: number;
     }
   ) => void;
   removeProcedure: (
@@ -121,7 +121,6 @@ interface T {
 
 export interface ActionProps {
   getId: (metadata: LessonMetadata) => string;
-  setMyLessons: Dispatch<SetStateAction<Lesson[]>>;
   metadata: T["metadata"];
   targetLanguageItems: T["targetLanguageItems"];
   tasks: T["tasks"];
@@ -145,7 +144,7 @@ export const LessonProvider = ({
 
   const togglePreview = () => setPreview((d) => !d);
 
-  const { getLessonById, getId, setMyLessons } = use(MyLessonsContext);
+  const { getLessonById, getId } = use(MyLessonsContext);
 
   const currentLesson = getLessonById(currentLessonId)!;
 
@@ -156,7 +155,6 @@ export const LessonProvider = ({
 
   const props: ActionProps = {
     getId,
-    setMyLessons,
     metadata,
     targetLanguageItems,
     tasks,

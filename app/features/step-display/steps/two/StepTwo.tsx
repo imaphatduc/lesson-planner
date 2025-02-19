@@ -19,7 +19,7 @@ const StepTwo = () => {
     const { active, over } = e;
 
     const activeId = active.id;
-    const overData = over?.data as PPPStage | undefined;
+    const overData = over?.data.current as PPPStage | undefined;
 
     if (overData && typeof activeId === "number") {
       setStageForTask(overData, activeId);
