@@ -17,6 +17,7 @@ export default function Add() {
     book: "Friends Global",
     grade: 0,
     unit: 0,
+    unitName: "",
     page: 0,
     image: "",
     targetLanguageItems: [

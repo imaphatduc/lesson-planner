@@ -21,6 +21,7 @@ import type { PPPStage, PPPStageGroup } from "~/contexts/usePPPProcedures";
 import { MyLessonsContext } from "~/contexts/MyLessonsContext";
 import { jsPDF } from "jspdf";
 import { XButton } from "~/features/x-button";
+import { useLocation } from "react-router";
 
 const HEADING_MARGINB_PX = 5 * 4; // tailwind p-5
 const A4_PAGE_WIDTH_MM = 210; // A4 page height in mm
@@ -85,10 +86,10 @@ const EditedTable = ({ ref }: { ref?: RefObject<HTMLTableElement | null> }) => {
   };
 
   return (
-    <table ref={ref} className="border-x border-t">
-      <Columns />
-      <tbody>
-        <DndContext onDragEnd={handleDragEnd}>
+    <DndContext onDragEnd={handleDragEnd}>
+      <table ref={ref} className="border-x border-t">
+        <Columns />
+        <tbody>
           {_("Lead-in") && (
             <StageGroupSection
               group={pppStageGroups.find((group) => group.name === "Lead-in")!}
@@ -121,9 +122,9 @@ const EditedTable = ({ ref }: { ref?: RefObject<HTMLTableElement | null> }) => {
               }
             />
           )}
-        </DndContext>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </DndContext>
   );
 };
 
@@ -328,12 +329,12 @@ const PreviewingForExport = () => {
         {!exporting && <div className="page-separator mb-5"></div>}
         {paginatedData.length > 1 &&
           paginatedData.slice(1).map((page, pageIndex) => (
-            <>
+            <Fragment key={pageIndex}>
               <div className="a4-print">
-                <PreviewingTable key={pageIndex} page={page} />
+                <PreviewingTable page={page} />
               </div>
               {!exporting && <div className="page-separator mb-5"></div>}
-            </>
+            </Fragment>
           ))}
       </div>
       <div>End of preview</div>
@@ -349,9 +350,11 @@ const PreviewingForExport = () => {
 const StepThree = () => {
   const { preview } = use(LessonContext);
 
+  const location = useLocation();
+
   return (
     <>
-      {preview && <PreviewingForExport />}
+      {location.pathname !== "/" && preview && <PreviewingForExport />}
 
       <div>
         <Heading />

@@ -92,7 +92,18 @@ const AddLesson = ({ pendingLesson, setPendingLesson }: Props) => {
           required
         />
       </QuestionLayout>
-      <QuestionLayout order={8} question="Page">
+      <QuestionLayout order={8} question="Unit name">
+        <Input
+          onChange={(e) =>
+            setPendingLesson({
+              ...pendingLesson,
+              unitName: e.target.value,
+            })
+          }
+          required
+        />
+      </QuestionLayout>
+      <QuestionLayout order={9} question="Page">
         <Input
           type="number"
           onChange={(e) =>
