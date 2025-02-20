@@ -120,7 +120,6 @@ interface T {
 }
 
 export interface ActionProps {
-  getId: (metadata: LessonMetadata) => string;
   metadata: T["metadata"];
   targetLanguageItems: T["targetLanguageItems"];
   tasks: T["tasks"];
@@ -144,7 +143,7 @@ export const LessonProvider = ({
 
   const togglePreview = () => setPreview((d) => !d);
 
-  const { getLessonById, getId } = use(MyLessonsContext);
+  const { getLessonById } = use(MyLessonsContext);
 
   const currentLesson = getLessonById(currentLessonId)!;
 
@@ -154,7 +153,6 @@ export const LessonProvider = ({
     targetLanguageItems.find((d) => d.current) ?? targetLanguageItems[0];
 
   const props: ActionProps = {
-    getId,
     metadata,
     targetLanguageItems,
     tasks,

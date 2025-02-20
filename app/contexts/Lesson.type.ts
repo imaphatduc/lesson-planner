@@ -21,6 +21,8 @@ export interface TargetLanguageItem {
 }
 
 export interface Lesson {
+  id: string;
+  no?: number;
   name: string;
   code: LessonCode | "";
   objectives: string;

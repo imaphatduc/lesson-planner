@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { Lesson } from "~/contexts";
 import { XButton } from "../x-button";
+import { FileUploader } from "../file-uploader";
 
 interface Props {
   pendingLesson: Lesson;
@@ -29,20 +30,14 @@ const LessonUploader = ({ pendingLesson, setPendingLesson }: Props) => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <label
-        htmlFor="file-upload"
-        className="cursor-pointer px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition"
-      >
-        Choose Image
-      </label>
-      <input
-        id="file-upload"
+      <FileUploader
         required
-        type="file"
         accept="image/*"
         className="hidden"
         onChange={handleFileChange}
-      />
+      >
+        Choose Image
+      </FileUploader>
 
       {/* Image Preview */}
       {pendingLesson.image.length > 0 && (

@@ -6,36 +6,42 @@ import { use, useState, type FormEvent } from "react";
 import type { Lesson } from "~/contexts";
 import { MyLessonsContext } from "~/contexts/MyLessonsContext";
 import { Form, useNavigate } from "react-router";
+import { v4 as uuid } from "uuid";
+import { useLocalStorage } from "usehooks-ts";
 
 export default function Add() {
-  const { addLesson, getId } = use(MyLessonsContext);
+  const { addLesson } = use(MyLessonsContext);
 
-  const [pendingLesson, setPendingLesson] = useState<Lesson>({
-    name: "",
-    code: "",
-    objectives: "",
-    book: "Friends Global",
-    grade: 0,
-    unit: 0,
-    unitName: "",
-    page: 0,
-    image: "",
-    targetLanguageItems: [
-      {
-        id: 0,
-        name: "#1",
-      },
-    ],
-    tasks: [],
-    currentStep: 0,
-  });
+  const [pendingLesson, setPendingLesson] = useLocalStorage<Lesson>(
+    "pending-lesson",
+    {
+      id: uuid(),
+      name: "",
+      code: "",
+      objectives: "",
+      book: "Friends Global",
+      grade: 0,
+      unit: 0,
+      unitName: "",
+      page: 0,
+      image: "",
+      targetLanguageItems: [
+        {
+          id: 0,
+          name: "#1",
+        },
+      ],
+      tasks: [],
+      currentStep: 0,
+    }
+  );
 
   const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addLesson(pendingLesson);
-    navigate(`/planning/${getId(pendingLesson)}`);
+    navigate(`/planning/${pendingLesson.id}`);
   };
 
   return (

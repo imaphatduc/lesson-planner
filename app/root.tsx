@@ -8,13 +8,9 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import {
-  MyLessonsContext,
-  MyLessonsProvider,
-} from "./contexts/MyLessonsContext";
+import { MyLessonsProvider } from "./contexts/MyLessonsContext";
 import "./app.css";
-import { use } from "react";
-import { Moon, Sun } from "lucide-react";
+import { Navbar } from "./features/navbar";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -47,7 +43,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <MyLessonsProvider>
-          <NavbarLayout>{children}</NavbarLayout>
+          <Navbar />
+          <div className="h-screen">{children}</div>
         </MyLessonsProvider>
         <ScrollRestoration />
         <Scripts />
@@ -55,22 +52,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
     </html>
   );
 }
-
-const NavbarLayout = ({ children }: { children: React.ReactNode }) => {
-  const { darkMode, setDarkMode } = use(MyLessonsContext);
-
-  return (
-    <div>
-      <button
-        className=" shadow-md mt-4 ml-4 p-2 hover:bg-neutral-300 hover:dark:bg-neutral-600 rounded-md cursor-pointer"
-        onClick={() => (darkMode ? setDarkMode(false) : setDarkMode(true))}
-      >
-        {darkMode ? <Moon /> : <Sun />}
-      </button>
-      <div className="h-screen">{children}</div>
-    </div>
-  );
-};
 
 export default function App() {
   return <Outlet />;

@@ -13,7 +13,7 @@ interface MyLessons {
   darkMode: boolean;
   setDarkMode: (d: boolean) => void;
   myLessons: Lesson[];
-  getId: (metadata: LessonMetadata) => string;
+  getLabel: (metadata: LessonMetadata) => string;
   getLessonById: (id: string) => Lesson | undefined;
   addLesson: (d: Lesson) => void;
 }
@@ -22,7 +22,7 @@ export const MyLessonsContext = createContext<MyLessons>({
   darkMode: false,
   setDarkMode: () => {},
   myLessons: [],
-  getId: () => "",
+  getLabel: () => "",
   getLessonById: () => undefined,
   addLesson: () => {},
 });
@@ -34,7 +34,8 @@ export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
   // useEffect(() => {
   //   const _ = async () => {
   //     for (let l of ls) {
-  //       await db.myLessons.add(l);
+  //       const id = uuid();
+  //       await db.myLessons.add({ ...l, id });
   //     }
   //   };
   //   _();
@@ -50,25 +51,24 @@ export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
     }
   }, [darkMode]);
 
-  const addLesson = async (lesson: Lesson) => {
-    await db.myLessons.add(lesson);
-  };
-
-  const getId = (metadata: LessonMetadata) =>
+  const getLabel = (metadata: LessonMetadata) =>
     `${metadata.grade}-${metadata.book}-${metadata.unit}-${metadata.code}-${
       lessonReference[metadata.code as LessonCode]
     }`;
 
-  const getLessonById = (id: string) => {
-    const [grade, book, unit, code] = id.split("-");
-
-    const lesson = myLessons.find(
-      (lesson) =>
-        lesson.grade === parseInt(grade) &&
-        lesson.book === book &&
-        lesson.unit === parseInt(unit) &&
-        lesson.code === code
+  const addLesson = async (lesson: Lesson) => {
+    const sameLessonsLabels = myLessons.filter(
+      (d) => getLabel(d) === getLabel(lesson)
     );
+
+    await db.myLessons.add({
+      ...lesson,
+      no: sameLessonsLabels.length > 0 ? sameLessonsLabels.length : undefined,
+    });
+  };
+
+  const getLessonById = (id: string) => {
+    const lesson = myLessons.find((lesson) => lesson.id === id);
 
     return lesson;
   };
@@ -79,7 +79,7 @@ export const MyLessonsProvider = ({ children }: PropsWithChildren) => {
         darkMode,
         setDarkMode,
         myLessons,
-        getId,
+        getLabel,
         getLessonById,
         addLesson,
       }}

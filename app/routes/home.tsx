@@ -7,7 +7,7 @@ import { LessonProvider, lessonReference, type LessonCode } from "~/contexts";
 import { StepThree } from "~/features/step-display/steps";
 
 export default function Home() {
-  const { myLessons, getId } = use(MyLessonsContext);
+  const { myLessons } = use(MyLessonsContext);
 
   const [previewingLessonId, setPreviewingLessonId] = useState("");
 
@@ -24,9 +24,9 @@ export default function Home() {
           <ul className="ml-5 space-y-3">
             {myLessons.map((lesson) => (
               <li
-                key={getId(lesson)}
+                key={lesson.id}
                 className={
-                  getId(lesson) === previewingLessonId
+                  lesson.id === previewingLessonId
                     ? "list-disc border-l-4 border-teal-500 px-3"
                     : "list-disc"
                 }
@@ -40,10 +40,10 @@ export default function Home() {
                 </p>
                 <p
                   className="hover:underline underline-offset-4 cursor-pointer"
-                  onClick={() => setPreviewingLessonId(getId(lesson))}
+                  onClick={() => setPreviewingLessonId(lesson.id)}
                 >
                   {lesson.unit}
-                  {lesson.code} - {lesson.name}
+                  {lesson.code} - {lesson.name} {lesson.no && `(${lesson.no})`}
                 </p>
               </li>
             ))}
