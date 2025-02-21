@@ -22,8 +22,11 @@ import { MyLessonsContext } from "~/contexts/MyLessonsContext";
 import { jsPDF } from "jspdf";
 import { XButton } from "~/features/x-button";
 import { useLocation } from "react-router";
+import { getEditors, RichTextEditor } from "~/features/rich-text";
+import ProcedureInput from "./ProcedureInput";
 
 const HEADING_MARGINB_PX = 5 * 4; // tailwind p-5
+const OBJECTIVES_MARGINB_PX = 5 * 3; // tailwind mb-3
 const A4_PAGE_WIDTH_MM = 210; // A4 page height in mm
 const A4_PAGE_HEIGHT_MM = 297; // A4 page height in mm
 const MM_PER_PX = 0.264583; // Convert px to mm (1px ≈ 0.264583mm)
@@ -147,6 +150,74 @@ const Heading = ({ ref }: { ref?: RefObject<HTMLDivElement | null> }) => {
   );
 };
 
+const Objectives = ({ ref }: { ref?: RefObject<HTMLDivElement | null> }) => {
+  const {
+    preview,
+    metadata: {
+      objectives: { knowledge, ability, behavior },
+    },
+    setObjectives,
+  } = use(LessonContext);
+
+  const info = [
+    {
+      defaultValue: knowledge,
+      setter: (d: string) => setObjectives(d, "", ""),
+    },
+    {
+      defaultValue: ability,
+      setter: (d: string) => setObjectives("", d, ""),
+    },
+    {
+      defaultValue: behavior,
+      setter: (d: string) => setObjectives("", "", d),
+    },
+  ];
+
+  const editors = getEditors(info);
+
+  const labels = ["Knowledge", "Ability", "Behavior"];
+
+  return (
+    <div ref={ref} className="space-y-3 mb-3 ml-5">
+      <div>
+        <p className="font-bold">
+          I. <span className="underline">OBJECTIVES</span>
+        </p>
+        <div className="ml-5">
+          <p>By the end of this lesson, the students will be able to:</p>
+          {editors.map(
+            (editor, i) =>
+              editor && (
+                <div key={i} className="my-2">
+                  <div className="mb-1 italic">
+                    <span>{i + 1}.</span>{" "}
+                    <span className="font-bold">{labels[i]}</span>
+                  </div>
+                  {!preview ? (
+                    <ProcedureInput editor={editor} />
+                  ) : (
+                    <div
+                      className="prose"
+                      dangerouslySetInnerHTML={{
+                        __html: info[i].defaultValue,
+                      }}
+                    />
+                  )}
+                </div>
+              )
+          )}
+        </div>
+      </div>
+      <div>
+        <p className="font-bold">
+          II. <span className="underline">TEACHING PROCEDURES</span>
+        </p>
+      </div>
+    </div>
+  );
+};
+
 type CellsData = string[];
 
 type RowsData = {
@@ -189,6 +260,8 @@ const PreviewingForExport = () => {
 
   const headingRef = useRef<HTMLDivElement>(null);
 
+  const objectivesRef = useRef<HTMLDivElement>(null);
+
   const previewingTableRef = useRef<HTMLTableElement>(null);
 
   const getTableData = () => {
@@ -229,10 +302,11 @@ const PreviewingForExport = () => {
   };
 
   const paginateByHeight = (data: RowsData[], pageHeight: number) => {
-    if (headingRef.current) {
+    if (headingRef.current && objectivesRef.current) {
       let pages: PaginatedData[] = [];
       let currentPage: PaginatedData = [];
-      let currentHeight = headingRef.current.clientHeight;
+      let currentHeight =
+        headingRef.current.clientHeight + objectivesRef.current.clientHeight;
 
       data.forEach((row) => {
         if (currentHeight + row.height > pageHeight && currentPage.length > 0) {
@@ -263,14 +337,14 @@ const PreviewingForExport = () => {
     }
   }, [preview]);
 
-  const padding = PAGE_PADDING_PX;
-  const headingMarginBottom = HEADING_MARGINB_PX;
-
   const paginatedData = useMemo(
     () =>
       paginateByHeight(
         dataRef.current,
-        MAX_PAGE_HEIGHT_PX - 2 * padding - headingMarginBottom
+        MAX_PAGE_HEIGHT_PX -
+          2 * PAGE_PADDING_PX -
+          HEADING_MARGINB_PX -
+          OBJECTIVES_MARGINB_PX
       ),
     [data, MAX_PAGE_HEIGHT_PX]
   );
@@ -324,6 +398,7 @@ const PreviewingForExport = () => {
       <div ref={pdfRef}>
         <div className="a4-print">
           <Heading ref={headingRef} />
+          <Objectives ref={objectivesRef} />
           {paginatedData.length > 0 && (
             <PreviewingTable page={paginatedData[0]} />
           )}
@@ -360,6 +435,7 @@ const StepThree = () => {
 
       <div>
         <Heading />
+        <Objectives />
         <EditedTable />
       </div>
     </>

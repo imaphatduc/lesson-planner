@@ -25,7 +25,12 @@ export interface Lesson {
   no?: number;
   name: string;
   code: LessonCode | "";
-  objectives: string;
+  objectives: {
+    book: string;
+    knowledge: string;
+    ability: string;
+    behavior: string;
+  };
   book: "Friends Global";
   grade: number;
   unit: number;

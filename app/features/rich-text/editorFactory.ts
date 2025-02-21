@@ -7,9 +7,10 @@ import StarterKit from "@tiptap/starter-kit";
 type Setter = (_: string) => void;
 
 export const getEditors = (
-  setActivities: Setter,
-  setContent: Setter,
-  defaultValues?: { activities: string; content: string }
+  info: {
+    defaultValue?: string;
+    setter: Setter;
+  }[]
 ) => {
   const editorFactory = (setContent: Setter, defaultValue?: string) =>
     useEditor({
@@ -23,12 +24,7 @@ export const getEditors = (
       onUpdate: ({ editor }) => setContent(editor.getHTML()),
     });
 
-  const activitiesEditor = editorFactory(
-    setActivities,
-    defaultValues?.activities
-  );
+  const editors = info.map((d) => editorFactory(d.setter, d.defaultValue));
 
-  const contentEditor = editorFactory(setContent, defaultValues?.content);
-
-  return { activitiesEditor, contentEditor };
+  return editors;
 };

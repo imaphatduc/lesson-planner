@@ -49,7 +49,15 @@ const AddLesson = ({ pendingLesson, setPendingLesson }: Props) => {
       <QuestionLayout order={4} question="Objectives">
         <Input
           onChange={(e) =>
-            setPendingLesson({ ...pendingLesson, objectives: e.target.value })
+            setPendingLesson({
+              ...pendingLesson,
+              objectives: {
+                book: e.target.value,
+                knowledge: "",
+                ability: "",
+                behavior: "",
+              },
+            })
           }
           required
         />

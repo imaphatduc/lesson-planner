@@ -18,7 +18,12 @@ export default function Add() {
       id: uuid(),
       name: "",
       code: "",
-      objectives: "",
+      objectives: {
+        book: "",
+        knowledge: "",
+        ability: "",
+        behavior: "",
+      },
       book: "Friends Global",
       grade: 0,
       unit: 0,

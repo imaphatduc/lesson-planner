@@ -20,15 +20,18 @@ const EditingProcedureInputGrid = ({
 }: Props) => {
   const { editProcedure } = use(LessonContext);
 
-  const { activitiesEditor, contentEditor } = getEditors(
-    (activities) =>
-      editProcedure(procedure.id, taskId, stageName, activities, ""),
-    (content) => editProcedure(procedure.id, taskId, stageName, "", content),
+  const [activitiesEditor, contentEditor] = getEditors([
     {
-      activities: procedure.activities,
-      content: procedure.content,
-    }
-  );
+      defaultValue: procedure.activities,
+      setter: (activities) =>
+        editProcedure(procedure.id, taskId, stageName, activities, ""),
+    },
+    {
+      defaultValue: procedure.content,
+      setter: (content) =>
+        editProcedure(procedure.id, taskId, stageName, "", content),
+    },
+  ]);
 
   return (
     activitiesEditor &&

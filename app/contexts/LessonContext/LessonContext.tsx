@@ -1,11 +1,4 @@
-import {
-  createContext,
-  use,
-  useState,
-  type Dispatch,
-  type PropsWithChildren,
-  type SetStateAction,
-} from "react";
+import { createContext, use, useState, type PropsWithChildren } from "react";
 import type { Task, TaskInStage, TaskProcedure } from "../Task.type";
 import {
   lessonReference,
@@ -15,6 +8,7 @@ import {
 } from "../Lesson.type";
 import { MyLessonsContext } from "~/contexts/MyLessonsContext";
 import { setCurrentStep } from "./actions/lesson";
+import { setObjectives } from "./actions/lesson/setObjectives";
 import {
   setCurrentTargetLanguageItem,
   addTargetLanguageItem,
@@ -48,6 +42,7 @@ interface T {
   metadata: LessonMetadata;
   getLabel: () => string;
   setCurrentStep: (axis: number) => void;
+  setObjectives: (knowledge: string, ability: string, behavior: string) => void;
 
   // TARGET LANGUAGE ITEM //
 
@@ -174,6 +169,7 @@ export const LessonProvider = ({
         metadata,
         getLabel,
         setCurrentStep: setCurrentStep(props),
+        setObjectives: setObjectives(props),
         targetLanguageItems,
         getCurrentTargetLanguageItem,
         setCurrentTargetLanguageItem: setCurrentTargetLanguageItem(props),
