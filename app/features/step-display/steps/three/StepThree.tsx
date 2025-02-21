@@ -239,7 +239,7 @@ const PreviewingTable = ({ page }: { page: PaginatedData }) => {
             <tr key={rowIndex} className={row.className}>
               {row.cells.map((cell, colIndex) => (
                 <td
-                  className="align-top p-2"
+                  className="prose align-top p-2"
                   key={colIndex}
                   dangerouslySetInnerHTML={{
                     __html: cell,
@@ -424,7 +424,7 @@ const PreviewingForExport = () => {
       </div>
       <div className="mb-5">End of preview</div>
       {data.length === 0 && (
-        <div className="a4-print opacity-0">
+        <div className="a4-print opacity-0 font-[EBGaramond-Regular] text-lg">
           <EditedTable ref={previewingTableRef} />
         </div>
       )}
