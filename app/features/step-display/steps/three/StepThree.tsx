@@ -18,12 +18,13 @@ import {
   type RefObject,
 } from "react";
 import type { PPPStage, PPPStageGroup } from "~/contexts/usePPPProcedures";
-import { MyLessonsContext } from "~/contexts/MyLessonsContext";
-import { jsPDF } from "jspdf";
 import { XButton } from "~/features/x-button";
 import { useLocation } from "react-router";
-import { getEditors, RichTextEditor } from "~/features/rich-text";
+import { getEditors } from "~/features/rich-text";
 import ProcedureInput from "./ProcedureInput";
+
+import { jsPDF } from "jspdf";
+import "./fonts/EBGaramond";
 
 const HEADING_MARGINB_PX = 5 * 4; // tailwind p-5
 const OBJECTIVES_MARGINB_PX = 5 * 3; // tailwind mb-3
@@ -353,14 +354,17 @@ const PreviewingForExport = () => {
 
   const handleExportPDF = async () => {
     setExporting(true);
-    const tableElement = pdfRef.current!.querySelector("table");
-
-    if (pdfRef.current && tableElement) {
+    if (pdfRef.current) {
       const doc = new jsPDF({
         orientation: "portrait",
         unit: "mm",
         format: "a4",
       });
+
+      doc.setFont("EBGaramond", "normal");
+      doc.setFont("EBGaramond", "bold");
+      doc.setFont("EBGaramond", "italic");
+      doc.setFont("EBGaramond", "bolditalic");
 
       doc.html(pdfRef.current!, {
         callback: async (pdf) => {
@@ -395,7 +399,7 @@ const PreviewingForExport = () => {
           Export PDF
         </button>
       </div>
-      <div ref={pdfRef}>
+      <div ref={pdfRef} className="font-[EBGaramond-Regular] text-lg">
         <div className="a4-print">
           <Heading ref={headingRef} />
           <Objectives ref={objectivesRef} />
