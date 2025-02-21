@@ -7,10 +7,11 @@ import {
   type SetStateAction,
 } from "react";
 import type { Task, TaskInStage, TaskProcedure } from "../Task.type";
-import type {
-  Lesson,
-  LessonMetadata,
-  TargetLanguageItem,
+import {
+  lessonReference,
+  type LessonCode,
+  type LessonMetadata,
+  type TargetLanguageItem,
 } from "../Lesson.type";
 import { MyLessonsContext } from "~/contexts/MyLessonsContext";
 import { setCurrentStep } from "./actions/lesson";
@@ -45,6 +46,7 @@ interface T {
   togglePreview: () => void;
 
   metadata: LessonMetadata;
+  getLabel: () => string;
   setCurrentStep: (axis: number) => void;
 
   // TARGET LANGUAGE ITEM //
@@ -149,6 +151,11 @@ export const LessonProvider = ({
 
   const { targetLanguageItems, tasks, ...metadata } = currentLesson;
 
+  const getLabel = () =>
+    `${metadata.grade}-${metadata.book}-${metadata.unit}-${metadata.code}-${
+      lessonReference[metadata.code as LessonCode]
+    }`;
+
   const getCurrentTargetLanguageItem = () =>
     targetLanguageItems.find((d) => d.current) ?? targetLanguageItems[0];
 
@@ -165,6 +172,7 @@ export const LessonProvider = ({
         preview,
         togglePreview,
         metadata,
+        getLabel,
         setCurrentStep: setCurrentStep(props),
         targetLanguageItems,
         getCurrentTargetLanguageItem,

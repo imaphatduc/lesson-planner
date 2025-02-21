@@ -105,16 +105,17 @@ const StageSection = ({
                     </div>
                   )}
                   {!editingTaskInstructions &&
-                    !preview &&
                     (task.instructions ? (
                       `: ${task.instructions}`
-                    ) : (
+                    ) : !preview ? (
                       <button
                         className="mx-2 font-normal transition bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-600 dark:hover:bg-neutral-700 p-1 rounded-sm cursor-pointer"
                         onClick={() => setEditingTaskInstructions(true)}
                       >
                         Add instructions
                       </button>
+                    ) : (
+                      <></>
                     ))}
                   <p className="font-normal">
                     ({task.stages.reduce((acc, d) => acc + d.timing, 0)}{" "}

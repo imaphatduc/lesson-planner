@@ -183,7 +183,7 @@ const PreviewingTable = ({ page }: { page: PaginatedData }) => {
 };
 
 const PreviewingForExport = () => {
-  const { preview, togglePreview, metadata } = use(LessonContext);
+  const { preview, togglePreview, getLabel } = use(LessonContext);
 
   const pdfRef = useRef<HTMLDivElement>(null);
 
@@ -290,7 +290,7 @@ const PreviewingForExport = () => {
 
       doc.html(pdfRef.current!, {
         callback: async (pdf) => {
-          await pdf.save(`${metadata.id}.pdf`, { returnPromise: true });
+          await pdf.save(`${getLabel()}.pdf`, { returnPromise: true });
           setExporting(false);
         },
         width: A4_PAGE_WIDTH_MM,
