@@ -7,8 +7,8 @@ export const lessonReference = {
   D: "Grammar",
   E: "Word skills",
   // F: "Reading",
-  // G: "Speaking",
-  // H: "Writing",
+  G: "Speaking",
+  H: "Writing",
 } as const;
 
 export type LessonCode = keyof typeof lessonReference;
