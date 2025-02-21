@@ -11,6 +11,7 @@ import type { Route } from "./+types/root";
 import { MyLessonsProvider } from "./contexts/MyLessonsContext";
 import "./app.css";
 import { Navbar } from "./features/navbar";
+import { Analytics } from "@vercel/analytics/react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -48,6 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </MyLessonsProvider>
         <ScrollRestoration />
         <Scripts />
+        <Analytics />
       </body>
     </html>
   );
