@@ -26,7 +26,7 @@ import ProcedureInput from "./ProcedureInput";
 import { jsPDF } from "jspdf";
 import "./fonts/EBGaramond";
 
-const HEADING_MARGINB_PX = 5 * 4; // tailwind p-5
+const HEADING_MARGINB_PX = 5 * 5; // tailwind pb-5
 const OBJECTIVES_MARGINB_PX = 5 * 3; // tailwind mb-3
 const A4_PAGE_WIDTH_MM = 210; // A4 page height in mm
 const A4_PAGE_HEIGHT_MM = 297; // A4 page height in mm
