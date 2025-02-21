@@ -299,7 +299,7 @@ const PreviewingForExport = () => {
       };
     });
 
-    return data;
+    return data.filter((d) => !d.cells.every((cell) => cell === ""));
   };
 
   const paginateByHeight = (data: RowsData[], pageHeight: number) => {
