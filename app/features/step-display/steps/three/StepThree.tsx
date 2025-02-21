@@ -28,18 +28,13 @@ import "./fonts/EBGaramond";
 
 const HEADING_MARGINB_PX = 5 * 5; // tailwind pb-5
 const OBJECTIVES_MARGINB_PX = 5 * 3; // tailwind mb-3
-const GAP_BETWEEN_PAGES_PX = 5 * 5;
 const A4_PAGE_WIDTH_MM = 210; // A4 page height in mm
 const A4_PAGE_HEIGHT_MM = 297; // A4 page height in mm
 const MM_PER_PX = 0.264583; // Convert px to mm (1px ≈ 0.264583mm)
 const MAX_PAGE_HEIGHT_PX = A4_PAGE_HEIGHT_MM / MM_PER_PX; // Max A4 page height in pixels
 const PAGE_PADDING_PX = (2 * 10) / MM_PER_PX;
 
-const Columns = ({
-  ref,
-}: {
-  ref?: RefObject<HTMLTableSectionElement | null>;
-}) => {
+const Columns = () => {
   return (
     <>
       <colgroup>
@@ -47,7 +42,7 @@ const Columns = ({
         <col className="w-1/2 border-r" />
         <col className="w-1/2" />
       </colgroup>
-      <thead ref={ref}>
+      <thead>
         <tr className="border-b">
           <th className="border-r">
             <ColumnTitle title="STAGES" />
@@ -234,17 +229,11 @@ type RowsData = {
 
 type PaginatedData = RowsData[];
 
-const PreviewingTable = ({
-  page,
-  theadRef,
-}: {
-  page: PaginatedData;
-  theadRef: RefObject<HTMLTableSectionElement | null>;
-}) => {
+const PreviewingTable = ({ page }: { page: PaginatedData }) => {
   return (
     <div className="border">
       <table border={1} width="100%">
-        <Columns ref={theadRef} />
+        <Columns />
         <tbody>
           {page.map((row, rowIndex) => (
             <tr key={rowIndex} className={row.className}>
@@ -273,8 +262,6 @@ const PreviewingForExport = () => {
   const headingRef = useRef<HTMLDivElement>(null);
 
   const objectivesRef = useRef<HTMLDivElement>(null);
-
-  const previewingTheadRef = useRef<HTMLTableSectionElement>(null);
 
   const previewingTableRef = useRef<HTMLTableElement>(null);
 
@@ -316,23 +303,21 @@ const PreviewingForExport = () => {
   };
 
   const paginateByHeight = (data: RowsData[], pageHeight: number) => {
-    if (
-      headingRef.current &&
-      objectivesRef.current &&
-      previewingTheadRef.current
-    ) {
+    const theadElement = previewingTableRef.current?.querySelector("thead");
+
+    if (headingRef.current && objectivesRef.current && theadElement) {
       let pages: PaginatedData[] = [];
       let currentPage: PaginatedData = [];
       let currentHeight =
         headingRef.current.clientHeight +
         objectivesRef.current.clientHeight +
-        previewingTheadRef.current.clientHeight;
+        theadElement.clientHeight;
 
       data.forEach((row) => {
         if (currentHeight + row.height > pageHeight && currentPage.length > 0) {
           pages.push(currentPage);
           currentPage = [];
-          currentHeight = previewingTheadRef.current?.clientHeight ?? 0;
+          currentHeight = theadElement.clientHeight;
         }
         currentPage.push(row);
         currentHeight += row.height;
@@ -423,10 +408,7 @@ const PreviewingForExport = () => {
           <Heading ref={headingRef} />
           <Objectives ref={objectivesRef} />
           {paginatedData.length > 0 && (
-            <PreviewingTable
-              page={paginatedData[0]}
-              theadRef={previewingTheadRef}
-            />
+            <PreviewingTable page={paginatedData[0]} />
           )}
         </div>
         {!exporting && <div className="page-separator mb-5"></div>}
@@ -434,7 +416,7 @@ const PreviewingForExport = () => {
           paginatedData.slice(1).map((page, pageIndex) => (
             <Fragment key={pageIndex}>
               <div className="a4-print">
-                <PreviewingTable page={page} theadRef={previewingTheadRef} />
+                <PreviewingTable page={page} />
               </div>
               {!exporting && <div className="page-separator mb-5"></div>}
             </Fragment>
