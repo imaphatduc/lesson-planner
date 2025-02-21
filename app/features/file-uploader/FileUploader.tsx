@@ -1,18 +1,23 @@
 import type { InputHTMLAttributes, PropsWithChildren } from "react";
 
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  inputId: string;
+}
+
 const FileUploader = ({
+  inputId,
   children,
   ...props
-}: PropsWithChildren<InputHTMLAttributes<HTMLInputElement>>) => {
+}: PropsWithChildren<Props>) => {
   return (
     <>
       <label
-        htmlFor="file-upload"
+        htmlFor={inputId}
         className="cursor-pointer p-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition"
       >
         {children}
       </label>
-      <input id="file-upload" type="file" {...props} />
+      <input id={inputId} type="file" {...props} />
     </>
   );
 };

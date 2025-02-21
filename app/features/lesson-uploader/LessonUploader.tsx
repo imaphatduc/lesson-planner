@@ -31,6 +31,7 @@ const LessonUploader = ({ pendingLesson, setPendingLesson }: Props) => {
   return (
     <div className="flex flex-col items-center gap-4">
       <FileUploader
+        inputId="lesson-upload"
         required
         accept="image/*"
         className="hidden"

@@ -17,6 +17,7 @@ const Backup = () => {
   return (
     <>
       <FileUploader
+        inputId="import-data"
         accept=".json"
         className="hidden"
         onChange={handleFileChange}
