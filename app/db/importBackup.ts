@@ -48,7 +48,7 @@ export const importBackup = async (
       // Insert items into IndexedDB
       await db.myLessons.bulkPut(newItems);
 
-      alert("Lessons imported successfully!.");
+      alert("Lessons imported successfully!");
     } catch (error) {
       console.error("Error importing database:", error);
     }
