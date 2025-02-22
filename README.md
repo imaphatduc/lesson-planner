@@ -42,43 +42,43 @@ Bạn nhấn nút "Next Step" nhé.
 
 Vừng ơi, mở ra chặng thứ hai! Đến đây, bạn đã bắt đầu đi sâu vào tiến trình của mỗi giai đoạn rồi. Ở màn hình ứng dụng lúc này nè, bạn có thấy các giai đoạn lớn sau đây chia thành từng phần riêng không?
 
-0. Lead-in
+_0. Lead-in_
 
-1. Setting context
+_1. Setting context_
 
-2. Presentation
+_2. Presentation_
 
-3. Practice
+_3. Practice_
 
-4. Production
+_4. Production_
 
 Có hai giai đoạn mới toanh là 0. Lead-in, và 4. Production luôn kìa. Các giai đoạn này lại được chia thành những giai đoạn nhỏ hơn như sau:
 
 ### 0. Lead-in:
 
-Lead-in: tạo hứng thú, hướng học sinh chú ý đến chủ đề bài học.
+#### tạo hứng thú, hướng học sinh chú ý đến chủ đề bài học.
 
 ### 1. Setting context:
 
-Setting context: thiết lập ngữ cảnh thực tế cho ngữ liệu trọng tâm sắp được học.
+Thiết lập ngữ cảnh thực tế cho ngữ liệu trọng tâm sắp được học.
 
 ### 2. Presentation:
 
-2.1. Presenting meaning: giảng giải nghĩa và cách dùng của ngữ liệu trọng tâm.
+_2.1. Presenting meaning_: giảng giải nghĩa và cách dùng của ngữ liệu trọng tâm.
 
-2.2. Presenting form: phân tích cách viết của ngữ liệu từ vựng và cấu trúc của ngữ liệu ngữ pháp.
+_2.2. Presenting form_: phân tích cách viết của ngữ liệu từ vựng và cấu trúc của ngữ liệu ngữ pháp.
 
 ### 3. Practice:
 
-3.1. Mechanical oral practice: học sinh lặp lại nhiều lần ngữ liệu từ vựng/câu ví dụ cho sẵn.
+_3.1. Mechanical oral practice_: học sinh lặp lại nhiều lần ngữ liệu từ vựng/câu ví dụ cho sẵn.
 
-3.2. Meaningful oral practice: học sinh thực hành đặt câu với ý tưởng mình nghĩ ra, có sử dụng từ vựng/cấu trúc trọng tâm của bài học.
+_3.2. Meaningful oral practice_: học sinh thực hành đặt câu với ý tưởng mình nghĩ ra, có sử dụng từ vựng/cấu trúc trọng tâm của bài học.
 
-3.3. Reinforcement written practice: (các) bài tập viết yêu cầu học sinh điền đúng cách viết của từ/dạng cấu trúc ngữ pháp vừa học.
+_3.3. Reinforcement written practice_: (các) bài tập viết yêu cầu học sinh điền đúng cách viết của từ/dạng cấu trúc ngữ pháp vừa học.
 
 ### 4. Production:
 
-Production/Free practice: học sinh sử dụng ngữ liệu vừa học để trình bày ý kiến và trải nghiệm cá nhân theo chủ đề bài học.
+Học sinh sử dụng ngữ liệu vừa học để trình bày ý kiến và trải nghiệm cá nhân theo chủ đề bài học.
 
 Trong mỗi phần của giai đoạn lớn, mình có để các thẻ đánh số. Đó là các bài tập có đánh số trong sách của bạn đó. Bạn kéo thả các thẻ này vào ô kẻ viền đứt của các giai đoạn nhỏ nhé.
 

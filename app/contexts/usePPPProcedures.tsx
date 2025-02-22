@@ -29,8 +29,7 @@ export interface PPPStage {
     | "Presenting form"
     | "Mechanical oral practice"
     | "Meaningful oral practice"
-    | "Controlled practice"
-    | "Less-controlled practice"
+    | "Revision written practice"
     | "Production";
   group: PPPStageGroup["name"];
 }
@@ -85,11 +84,7 @@ export const usePPPProcedures = () => {
       group: "Practice",
     },
     {
-      name: "Controlled practice",
-      group: "Practice",
-    },
-    {
-      name: "Less-controlled practice",
+      name: "Revision written practice",
       group: "Practice",
     },
     {
