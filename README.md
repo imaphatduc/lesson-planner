@@ -112,4 +112,12 @@ P/S: Trời ơi, ứng dụng làm tàn tàn thôi, mà làm cái chức năng x
 
 ---
 
+## Đóng góp
+
+Nếu gặp lỗi trong quá trình sử dụng, bạn tạo tài khoản Github và mở một issue ở tab `Issue` bên trên nha.
+
+Còn nếu bạn muốn đóng góp chỉnh sửa mã nguồn, bạn đọc ở [CONTRIBUTING.md](/CONTRIBUTING.md) nhé.
+
+---
+
 Built with ❤️ using React Router, React, and Dexie.
